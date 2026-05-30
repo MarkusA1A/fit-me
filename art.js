@@ -274,6 +274,32 @@
       return svg(floor(100) + fore + body + head);
     })(),
 
+    /* Atmung – Kreis dehnt sich aus (Einatmen) & zieht sich zusammen (Ausatmen) */
+    breath: (function () {
+      var d = '4.5s';
+      var an = function (name, vals) {
+        return '<animate attributeName="' + name + '" values="' + vals + '" dur="' + d + '" keyTimes="0;0.45;1" repeatCount="indefinite"/>';
+      };
+      // pulsierender Ring + Punkt in der Mitte
+      var ring = '<circle cx="50" cy="58" fill="none" stroke="' + STROKE + '" stroke-width="4">' +
+        an('r', '14;34;14') + '<animate attributeName="opacity" values="0.5;1;0.5" dur="' + d + '" keyTimes="0;0.45;1" repeatCount="indefinite"/></circle>';
+      var ring2 = '<circle cx="50" cy="58" fill="none" stroke="' + ACCENT + '" stroke-width="2" opacity="0.6">' +
+        an('r', '8;26;8') + '</circle>';
+      var dot = B(50, 58, 5);
+      return svg(ring + ring2 + dot);
+    })(),
+
+    /* Meditation – sitzende Figur im Schneidersitz, ruhiges Atem-Wippen */
+    meditate: (function () {
+      var d = '5s';
+      var sit = L(50, 56, 30, 92) + L(50, 56, 70, 92) +   // gekreuzte Beine
+        L(30, 92, 70, 92) +                                // Boden-Sitzlinie
+        L(50, 56, 36, 72) + L(50, 56, 64, 72) +            // Arme auf die Knie
+        B(36, 73, 3) + B(64, 73, 3);                       // Hände/Mudra
+      var body = G(AT('translate', '0 0;0 -2;0 0', d), L(50, 40, 50, 58) + H(50, 32));
+      return svg(floor(96) + sit + body);
+    })(),
+
     /* Bird-Dog – Vierfüßler, Arm & Bein gegengleich gestreckt */
     birddog: (function () {
       var d = '2s';
@@ -292,6 +318,8 @@
     [/beinstrecker/, 'legext'],
     [/beinbeuger/, 'legcurl'],
     [/dehn|vorbeuge/, 'stretch'],
+    [/einatmen|ausatmen|halten|atem beobacht|box-atmung|atmung/, 'breath'],
+    [/body-scan|achtsam|nachspüren|innehalten|ankommen|hinlegen|zurückkommen|zurück in den|dankbarkeit|geräusche|gedanken|ganzer körper|nacken|becken|brust & rücken|arme & hände|füße & beine/, 'meditate'],
     [/atmen|atem/, 'breathe'],
     [/wadenheben/, 'calf'],
     [/halo/, 'halo'],
@@ -330,6 +358,8 @@
     for (let i = 0; i < RULES.length; i++) {
       if (RULES[i][0].test(lower)) return RULES[i][1];
     }
+    // Meditation: ohne Treffer eine ruhige Meditationsfigur statt Cardio-Atmen
+    if (cat === 'meditation') return 'meditate';
     return 'breathe';
   }
 

@@ -8,6 +8,20 @@
 
   /* ----------------------------------------------------- Verlauf / Fortschritt */
   const HISTORY_KEY = 'fitme-history';
+  const GOAL_KEY = 'fitme-weekly-goal';
+  const DEFAULT_GOAL = 3;
+
+  function loadGoal() {
+    try {
+      const v = parseInt(localStorage.getItem(GOAL_KEY), 10);
+      if (v >= 1 && v <= 14) return v;
+    } catch (e) {}
+    return DEFAULT_GOAL;
+  }
+
+  function saveGoal(v) {
+    try { localStorage.setItem(GOAL_KEY, String(v)); } catch (e) {}
+  }
 
   function loadHistory() {
     try {
@@ -156,7 +170,7 @@
   }
 
   function renderHome() {
-    const tiles = ['warmup', 'cardio', 'kraft', 'hiit', 'eigengewicht', 'rudern', 'cooldown'].map(function (key) {
+    const tiles = ['warmup', 'cardio', 'kraft', 'hiit', 'eigengewicht', 'rudern', 'cooldown', 'meditation'].map(function (key) {
       const m = CATEGORY_META[key];
       return (
         '<div class="cat-tile" data-goto="' + key + '">' +
@@ -169,7 +183,7 @@
 
     // Fortschritt diese Woche + Verlauf
     const st = weekStats();
-    const goal = 2; // 2× pro Woche
+    const goal = loadGoal(); // flexibles Wochenziel (pro Gerät einstellbar)
     const progressPct = Math.min(100, Math.round((st.sessions / goal) * 100));
     const streak = streakWeeks(goal);
     const streakHtml = streak > 0
@@ -183,6 +197,12 @@
           '<span class="progress-goal">' + st.sessions + ' / ' + goal + ' Einheiten</span>' +
         '</div>' +
         '<div class="progress-bar"><span style="width:' + progressPct + '%"></span></div>' +
+        '<div class="goal-setter">' +
+          '<span class="goal-label">Wochenziel</span>' +
+          '<button class="goal-btn" data-goal-dec aria-label="Ziel verringern">−</button>' +
+          '<span class="goal-value">' + goal + '×</span>' +
+          '<button class="goal-btn" data-goal-inc aria-label="Ziel erhöhen">+</button>' +
+        '</div>' +
         '<div class="progress-stats">' +
           '<span>⏱ ' + st.minutes + ' Min diese Woche</span>' +
           '<span>🏅 ' + st.total + ' Einheiten gesamt</span>' +
@@ -243,27 +263,15 @@
     view.innerHTML =
       '<section class="home-hero">' +
         '<h2>Willkommen zurück! 👋</h2>' +
-        '<p>Ich bin dein virtueller Coach. Wir trainieren 2× pro Woche je ca. 30 Minuten. ' +
-        'Starte <strong>immer</strong> mit einem Warm-up, wähle dann Cardio, Kraft oder HIIT – ' +
-        'und beende die Einheit mit einem Cool-down.</p>' +
+        '<p>Ich bin dein virtueller Coach. Trainiere so oft pro Woche, wie es zu dir passt – ' +
+        'jede Einheit dauert ca. 30 Minuten. Starte <strong>immer</strong> mit einem Warm-up, ' +
+        'wähle dann dein Training und beende die Einheit mit einem Cool-down. ' +
+        'Zum Runterkommen gibt es einen eigenen Meditations-Bereich.</p>' +
       '</section>' +
 
       progressHtml +
 
       sessionHtml +
-
-      '<div class="plan-week">' +
-        '<div class="plan-day">' +
-          '<span class="day-tag">Einheit 1</span>' +
-          '<h4>Kraft-Tag</h4>' +
-          '<p>Warm-up → Kraft (Kettlebells & Beinmaschine)</p>' +
-        '</div>' +
-        '<div class="plan-day">' +
-          '<span class="day-tag">Einheit 2</span>' +
-          '<h4>Cardio / HIIT-Tag</h4>' +
-          '<p>Warm-up → Cardio oder HIIT im Wechsel</p>' +
-        '</div>' +
-      '</div>' +
 
       '<h3 style="margin:8px 4px 12px;font-size:18px;">Trainingsbereiche</h3>' +
       '<div class="cat-row">' + tiles + '</div>' +
@@ -357,6 +365,8 @@
     }
     if (e.target.closest('[data-export-history]')) { exportHistory(); return; }
     if (e.target.closest('[data-import-history]')) { fileInput.click(); return; }
+    if (e.target.closest('[data-goal-dec]')) { saveGoal(Math.max(1, loadGoal() - 1)); renderHome(); return; }
+    if (e.target.closest('[data-goal-inc]')) { saveGoal(Math.min(14, loadGoal() + 1)); renderHome(); return; }
     const session = e.target.closest('[data-session]');
     if (session) { startSession(session.dataset.session); return; }
     const goto = e.target.closest('[data-goto]');
@@ -657,11 +667,16 @@
     }
     beep(660, 0.15);
     setTimeout(function () { beep(880, 0.25); }, 160);
+    const isMedi = currentWorkout && currentWorkout.cat === 'meditation';
+    const doneEmoji = isMedi ? '🧘' : '🎉';
+    const doneMsg = isMedi
+      ? 'Schön, dass du dir die Zeit genommen hast. Nimm die Ruhe mit in deinen Tag.'
+      : 'Starke Einheit. Vergiss das Cool-down nicht: 2–3 Minuten locker dehnen.';
     player.stage.innerHTML =
       '<div class="player-done">' +
-        '<div class="done-emoji">🎉</div>' +
+        '<div class="done-emoji">' + doneEmoji + '</div>' +
         '<h2>Geschafft!</h2>' +
-        '<p>Starke Einheit. Vergiss das Cool-down nicht: 2–3 Minuten locker dehnen.</p>' +
+        '<p>' + doneMsg + '</p>' +
       '</div>';
     player.btnPrev.style.visibility = 'hidden';
     player.btnSkip.style.visibility = 'hidden';

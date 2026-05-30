@@ -2,8 +2,9 @@
  * Fit-Me · Trainingsdaten
  * Zusammengestellt von deinem virtuellen Fitness-Coach.
  *
- * Ausrüstung: Kettlebells (verschiedene kg), Beinbeuger- & Beinstrecker-Maschine.
- * Ziel: 2× pro Woche, je ca. 30 Minuten.
+ * Ausrüstung: Kettlebells (verschiedene kg), Beinbeuger- & Beinstrecker-Maschine,
+ * Waterrower – plus Übungen ganz ohne Geräte.
+ * Einheiten dauern ca. 30 Minuten; das Wochenziel ist in der App frei einstellbar.
  *
  * Jede Übung hat:
  *  - name:    Bezeichnung
@@ -20,7 +21,8 @@ const TIPS = {
   hiit: 'Voller Einsatz in der Arbeitsphase, echte Erholung in der Pause. Qualität schlägt Wiederholungen.',
   eigengewicht: 'Kein Equipment nötig – nur du und der Boden. Tempo bewusst steuern: langsam runter, kontrolliert hoch. Bei Knie-/Handgelenksbeschwerden auf weicher Unterlage trainieren oder die leichtere Variante wählen.',
   rudern: 'Kraft kommt aus den Beinen: erst drücken, dann Körper zurück, zuletzt Arme ziehen. Zurück in umgekehrter Reihenfolge. Ruhiger, kräftiger Zug schlägt hektisches Reißen. Die Meter-Angaben (🎯) sind Richtwerte – nutze sie als Orientierung am Display, nicht als Pflicht.',
-  cooldown: 'Nach dem Training runterkommen: ruhig dehnen, tief atmen, jede Position sanft halten – nie in den Schmerz ziehen.'
+  cooldown: 'Nach dem Training runterkommen: ruhig dehnen, tief atmen, jede Position sanft halten – nie in den Schmerz ziehen.',
+  meditation: 'Such dir einen ruhigen Ort, sitz oder lieg bequem. Es gibt kein „richtig“ oder „falsch“ – kehre einfach freundlich zur Übung zurück, wenn die Gedanken abschweifen.'
 };
 
 const WORKOUTS = {
@@ -354,6 +356,89 @@ const WORKOUTS = {
         { name: 'Gesäß-Dehnung im Sitzen', work: 50, rest: 0, detail: 'Knöchel aufs andere Knie, leicht vorbeugen. Je 25 Sek. pro Seite.' }
       ]
     }
+  ],
+
+  /* ------------------------------------------------------------- MEDITATION */
+  meditation: [
+    {
+      id: 'medi-breath-478',
+      title: '4-7-8 Atmung',
+      level: 'Ruhig',
+      minutes: 3,
+      focus: 'Atmung · beruhigt Körper & Geist',
+      desc: 'Eine bewährte Atemtechnik zum Runterkommen: 4 Sek. einatmen, 7 Sek. halten, 8 Sek. ausatmen. Wirkt entspannend und hilft beim Einschlafen.',
+      exercises: [
+        { name: 'Ankommen & Haltung finden', work: 30, rest: 0, detail: 'Bequem sitzen oder liegen, Augen schließen. Schultern sinken lassen.' },
+        { name: 'Einatmen durch die Nase', work: 4, rest: 0, detail: 'Ruhig 4 Sekunden in den Bauch einatmen.' },
+        { name: 'Atem halten', work: 7, rest: 0, detail: 'Den Atem entspannt 7 Sekunden halten.' },
+        { name: 'Langsam ausatmen', work: 8, rest: 0, detail: 'Durch den Mund 8 Sekunden vollständig ausatmen.' },
+        { name: 'Einatmen durch die Nase', work: 4, rest: 0, detail: 'Wieder ruhig 4 Sekunden einatmen.' },
+        { name: 'Atem halten', work: 7, rest: 0, detail: 'Entspannt 7 Sekunden halten.' },
+        { name: 'Langsam ausatmen', work: 8, rest: 0, detail: 'Vollständig 8 Sekunden ausatmen.' },
+        { name: 'Einatmen durch die Nase', work: 4, rest: 0, detail: 'Ruhig 4 Sekunden einatmen.' },
+        { name: 'Atem halten', work: 7, rest: 0, detail: 'Entspannt 7 Sekunden halten.' },
+        { name: 'Langsam ausatmen', work: 8, rest: 0, detail: 'Vollständig 8 Sekunden ausatmen.' },
+        { name: 'Nachspüren', work: 40, rest: 0, detail: 'Wieder natürlich atmen. Spüre die Ruhe im Körper nach.' }
+      ]
+    },
+    {
+      id: 'medi-box-breath',
+      title: 'Box-Atmung',
+      level: 'Ruhig',
+      minutes: 3,
+      focus: 'Atmung · Fokus & Gelassenheit',
+      desc: 'Gleichmäßiges Atmen im Viereck: 4 Sek. ein, 4 halten, 4 aus, 4 halten. Schafft Klarheit und senkt Stress – auch ideal vor dem Training.',
+      exercises: [
+        { name: 'Ankommen', work: 30, rest: 0, detail: 'Aufrecht sitzen, Hände entspannt ablegen, Augen schließen.' },
+        { name: 'Einatmen', work: 4, rest: 0, detail: '4 Sekunden gleichmäßig einatmen.' },
+        { name: 'Halten', work: 4, rest: 0, detail: '4 Sekunden den vollen Atem halten.' },
+        { name: 'Ausatmen', work: 4, rest: 0, detail: '4 Sekunden gleichmäßig ausatmen.' },
+        { name: 'Halten (leer)', work: 4, rest: 0, detail: '4 Sekunden mit leeren Lungen halten.' },
+        { name: 'Einatmen', work: 4, rest: 0, detail: '4 Sekunden einatmen.' },
+        { name: 'Halten', work: 4, rest: 0, detail: '4 Sekunden halten.' },
+        { name: 'Ausatmen', work: 4, rest: 0, detail: '4 Sekunden ausatmen.' },
+        { name: 'Halten (leer)', work: 4, rest: 0, detail: '4 Sekunden leer halten.' },
+        { name: 'Einatmen', work: 4, rest: 0, detail: '4 Sekunden einatmen.' },
+        { name: 'Halten', work: 4, rest: 0, detail: '4 Sekunden halten.' },
+        { name: 'Ausatmen', work: 4, rest: 0, detail: '4 Sekunden ausatmen.' },
+        { name: 'Halten (leer)', work: 4, rest: 0, detail: '4 Sekunden leer halten.' },
+        { name: 'Ausklingen', work: 40, rest: 0, detail: 'Atem wieder frei fließen lassen. Ruhe nachspüren.' }
+      ]
+    },
+    {
+      id: 'medi-bodyscan',
+      title: 'Body-Scan',
+      level: 'Achtsamkeit',
+      minutes: 7,
+      focus: 'Achtsamkeit · Körperwahrnehmung',
+      desc: 'Wandere mit der Aufmerksamkeit ruhig durch den Körper. Löst Anspannung und bringt dich ganz in den gegenwärtigen Moment.',
+      exercises: [
+        { name: 'Hinlegen & ankommen', work: 40, rest: 0, detail: 'Bequem auf den Rücken legen, Augen schließen, ein paar tiefe Atemzüge.' },
+        { name: 'Füße & Beine', work: 60, rest: 0, detail: 'Aufmerksamkeit zu Füßen und Beinen. Wahrnehmen, was da ist – ohne zu bewerten.' },
+        { name: 'Becken & Bauch', work: 50, rest: 0, detail: 'Spüre den Bauch sich beim Atmen heben und senken. Loslassen.' },
+        { name: 'Brust & Rücken', work: 50, rest: 0, detail: 'Wahrnehmung in Brustkorb und Rücken. Anspannung bewusst lösen.' },
+        { name: 'Arme & Hände', work: 50, rest: 0, detail: 'Von den Schultern bis in die Fingerspitzen. Schwere zulassen.' },
+        { name: 'Nacken & Kopf', work: 50, rest: 0, detail: 'Kiefer, Stirn und Gesicht entspannen. Alles wird weich.' },
+        { name: 'Ganzer Körper', work: 60, rest: 0, detail: 'Den ganzen Körper als Ganzes spüren. Ruhig und vollständig da sein.' },
+        { name: 'Zurückkommen', work: 40, rest: 0, detail: 'Finger und Zehen bewegen, tief einatmen, langsam die Augen öffnen.' }
+      ]
+    },
+    {
+      id: 'medi-achtsamkeit',
+      title: 'Achtsamkeits-Pause',
+      level: 'Achtsamkeit',
+      minutes: 5,
+      focus: 'Achtsamkeit · kurze Auszeit',
+      desc: 'Eine kurze geführte Pause für zwischendurch. Bringt dich aus dem Gedankenkarussell zurück ins Hier und Jetzt.',
+      exercises: [
+        { name: 'Innehalten', work: 30, rest: 0, detail: 'Setz dich aufrecht hin. Komm bewusst zur Ruhe, nichts muss passieren.' },
+        { name: 'Atem beobachten', work: 60, rest: 0, detail: 'Beobachte deinen Atem, ohne ihn zu verändern. Ein und aus.' },
+        { name: 'Geräusche wahrnehmen', work: 50, rest: 0, detail: 'Lausche den Geräuschen um dich herum, ohne sie zu bewerten.' },
+        { name: 'Gedanken ziehen lassen', work: 50, rest: 0, detail: 'Gedanken kommen und gehen wie Wolken. Du musst ihnen nicht folgen.' },
+        { name: 'Dankbarkeit', work: 40, rest: 0, detail: 'Denk an eine Sache, für die du heute dankbar bist. Lächle innerlich.' },
+        { name: 'Zurück in den Tag', work: 30, rest: 0, detail: 'Atme tief durch, strecke dich sanft und nimm die Ruhe mit.' }
+      ]
+    }
   ]
 };
 
@@ -364,5 +449,6 @@ const CATEGORY_META = {
   hiit:   { label: 'HIIT', emoji: '⚡', color: '#ff5d73', sub: 'High Intensity Intervalle' },
   eigengewicht: { label: 'Eigengewicht', emoji: '🤸', color: '#f5b73d', sub: 'Ohne Geräte · überall' },
   rudern: { label: 'Rudern', emoji: '🚣', color: '#34c3d6', sub: 'Waterrower · Cardio & HIIT' },
-  cooldown: { label: 'Cool-down', emoji: '🧘', color: '#9d7bff', sub: 'Dehnen & runterkommen – zum Schluss' }
+  cooldown: { label: 'Cool-down', emoji: '🧘', color: '#9d7bff', sub: 'Dehnen & runterkommen – zum Schluss' },
+  meditation: { label: 'Meditation', emoji: '🧠', color: '#7dd3c0', sub: 'Atmung & Achtsamkeit' }
 };

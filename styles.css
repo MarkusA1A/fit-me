@@ -294,6 +294,29 @@ main {
   flex-wrap: wrap;
 }
 .progress-cheer { margin: 12px 0 0; color: #3ddc97; font-weight: 700; font-size: 14px; }
+
+/* Wochenziel-Stepper */
+.goal-setter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+.goal-label { color: var(--muted); font-size: 14px; flex: 1; }
+.goal-btn {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card-2);
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.goal-btn:active { transform: scale(0.92); }
+.goal-value { min-width: 38px; text-align: center; font-size: 17px; font-weight: 800; }
 .streak-badge {
   display: inline-flex;
   align-items: center;

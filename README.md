@@ -1,8 +1,9 @@
 # 💪 Fit-Me · Dein virtueller Fitness-Coach
 
-Eine schlanke Web-App, die als virtueller Coach **Cardio-, Kraft- und HIIT-Trainings**
-zusammenstellt – jede Einheit ca. **30 Minuten**, ausgelegt auf **2× pro Woche**.
-Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
+Eine schlanke Web-App, die als virtueller Coach **Cardio-, Kraft-, HIIT- und
+Eigengewicht-Trainings** zusammenstellt – jede Einheit ca. **30 Minuten**. Das
+**Wochenziel ist frei einstellbar**, sodass die App zu jedem passt (egal ob 1×
+oder 6× pro Woche). Läuft direkt im Browser, optimiert für **iPad, iPhone & Mac**.
 
 ## Was die App kann
 
@@ -17,11 +18,13 @@ Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
   Ruder-HIIT und eine Rudern-+-Kettlebell-Kombi.
 - **🧘 Cool-down als eigene Sektion** – zum Schluss: Stretching & runterkommen,
   inkl. speziellem Bein-Cool-down nach der Beinmaschine.
-- **📊 Fortschritt & Verlauf** – Wochenziel (2×), Minuten und Einheiten werden
-  automatisch lokal gespeichert und auf der Startseite angezeigt.
+- **🧠 Meditation** – geführte Atem- (4-7-8, Box-Atmung) und Achtsamkeits­übungen
+  (Body-Scan, Achtsamkeits-Pause) zum Entspannen und Fokussieren.
+- **📊 Flexibles Wochenziel** – frei einstellbar (1–14×/Woche). Fortschritt,
+  Minuten und Einheiten werden automatisch lokal gespeichert.
 - **🔥 Streak** – zeigt, wie viele Wochen in Folge du dein Ziel erreicht hast.
 - **🔗 Komplette Einheit** – startet Warm-up → Training → Cool-down geführt am
-  Stück (Kraft-, Cardio- oder HIIT-Tag).
+  Stück (Kraft-, Cardio-, HIIT-, Eigengewicht- oder Ruder-Tag).
 - **💾 Export / Import** – Verlauf als Datei sichern und auf iPhone oder Mac
   wieder einladen (kein Server, keine Anmeldung nötig).
 - **⏱ Geführter Workout-Player** mit Timer-Ring, Arbeits-/Pausenphasen,
