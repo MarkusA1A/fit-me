@@ -14,7 +14,12 @@ Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
 - **🧘 Cool-down als eigene Sektion** – zum Schluss: Stretching & runterkommen,
   inkl. speziellem Bein-Cool-down nach der Beinmaschine.
 - **📊 Fortschritt & Verlauf** – Wochenziel (2×), Minuten und Einheiten werden
-  automatisch lokal auf dem iPad gespeichert und auf der Startseite angezeigt.
+  automatisch lokal gespeichert und auf der Startseite angezeigt.
+- **🔥 Streak** – zeigt, wie viele Wochen in Folge du dein Ziel erreicht hast.
+- **🔗 Komplette Einheit** – startet Warm-up → Training → Cool-down geführt am
+  Stück (Kraft-, Cardio- oder HIIT-Tag).
+- **💾 Export / Import** – Verlauf als Datei sichern und auf iPhone oder Mac
+  wieder einladen (kein Server, keine Anmeldung nötig).
 - **⏱ Geführter Workout-Player** mit Timer-Ring, Arbeits-/Pausenphasen,
   Runden, Audio-Signalen und Übungs-Hinweisen.
 - **📲 Installierbar** auf dem iPad-Homescreen (PWA, läuft im Vollbild).
@@ -25,6 +30,16 @@ Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
 - 🦵 Beinbeuger-Maschine
 - 🦿 Beinstrecker-Maschine
 - 🧍 Eigengewicht
+
+## Läuft überall
+
+Reine Web-App – funktioniert in Safari/Chrome auf **iPad, iPhone und MacBook**.
+Das Layout passt sich an (eine Spalte am iPhone, zwei am Mac/iPad). Auf iPad/iPhone
+über *Teilen → Zum Home-Bildschirm*, am Mac in Safari über *Ablage → Zum Dock hinzufügen*.
+
+> Hinweis zum Verlauf: Er wird **pro Gerät** lokal gespeichert und **nicht**
+> automatisch synchronisiert. Mit **Export/Import** nimmst du ihn auf ein
+> anderes Gerät mit.
 
 ## Auf dem iPad nutzen
 

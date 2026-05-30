@@ -55,6 +55,90 @@
     return new Date(ts).toLocaleDateString('de-DE', { day: '2-digit', month: 'short' });
   }
 
+  /* Wöchentliche Einheiten-Zähler (Schlüssel = Montag-Mitternacht in ms) */
+  function weeklyCounts() {
+    const map = {};
+    loadHistory().forEach(function (h) {
+      const ws = startOfWeek(new Date(h.ts)).getTime();
+      map[ws] = (map[ws] || 0) + 1;
+    });
+    return map;
+  }
+
+  /* Wochen in Folge, in denen das Ziel erreicht wurde (laufende Woche zählt,
+     bricht aber nicht ab, solange sie noch offen ist). */
+  function streakWeeks(goal) {
+    const map = weeklyCounts();
+    let probe = new Date(startOfWeek(new Date()).getTime() + 12 * 3600000); // Montag, 12 Uhr
+    let streak = 0;
+    let offset = 0;
+    while (offset < 520) {
+      const ws = startOfWeek(probe).getTime();
+      const count = map[ws] || 0;
+      if (count >= goal) {
+        streak++;
+      } else if (offset > 0) {
+        break; // eine vergangene Woche ohne Ziel beendet die Serie
+      }
+      probe = new Date(probe.getTime() - 7 * 86400000);
+      offset++;
+    }
+    return streak;
+  }
+
+  /* ----------------------------------------------------- Export / Import */
+  function exportHistory() {
+    const payload = {
+      app: 'fit-me',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      history: loadHistory()
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = 'fit-me-verlauf-' + stamp + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function mergeHistory(incoming) {
+    const existing = loadHistory();
+    const byTs = {};
+    existing.concat(incoming).forEach(function (h) {
+      if (h && typeof h.ts === 'number') byTs[h.ts] = h;
+    });
+    const merged = Object.keys(byTs).map(function (k) { return byTs[k]; });
+    merged.sort(function (a, b) { return b.ts - a.ts; }); // neueste zuerst
+    saveHistory(merged);
+    return merged.length;
+  }
+
+  function handleImportFile(file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      try {
+        const data = JSON.parse(reader.result);
+        const list = Array.isArray(data) ? data : (data && data.history);
+        if (!Array.isArray(list)) throw new Error('Kein gültiger Verlauf');
+        const clean = list.filter(function (h) {
+          return h && typeof h.ts === 'number' && typeof h.title === 'string';
+        });
+        if (clean.length === 0) { window.alert('Die Datei enthält keine Einheiten.'); return; }
+        const totalNow = mergeHistory(clean);
+        renderHome();
+        window.alert('Import erfolgreich. Verlauf umfasst jetzt ' + totalNow + ' Einheiten.');
+      } catch (e) {
+        window.alert('Import fehlgeschlagen: keine gültige Fit-Me-Datei.');
+      }
+    };
+    reader.readAsText(file);
+  }
+
   /* ---------------------------------------------------------- Datum-Header */
   (function setToday() {
     const el = document.getElementById('todayInfo');
@@ -86,6 +170,11 @@
     const st = weekStats();
     const goal = 2; // 2× pro Woche
     const progressPct = Math.min(100, Math.round((st.sessions / goal) * 100));
+    const streak = streakWeeks(goal);
+    const streakHtml = streak > 0
+      ? '<div class="streak-badge">🔥 <strong>' + streak + '</strong> ' +
+        (streak === 1 ? 'Woche' : 'Wochen') + ' in Folge</div>'
+      : '';
     const progressHtml =
       '<div class="home-progress">' +
         '<div class="progress-head">' +
@@ -94,19 +183,34 @@
         '</div>' +
         '<div class="progress-bar"><span style="width:' + progressPct + '%"></span></div>' +
         '<div class="progress-stats">' +
-          '<span>🔥 ' + st.minutes + ' Min diese Woche</span>' +
+          '<span>⏱ ' + st.minutes + ' Min diese Woche</span>' +
           '<span>🏅 ' + st.total + ' Einheiten gesamt</span>' +
         '</div>' +
+        streakHtml +
         (st.sessions >= goal ? '<p class="progress-cheer">🎉 Wochenziel erreicht – stark!</p>' : '') +
       '</div>';
 
+    // Komplette Einheit (Warm-up → Training → Cool-down, geführt am Stück)
+    const sessionHtml =
+      '<div class="home-session">' +
+        '<h4>Komplette Einheit</h4>' +
+        '<p class="session-sub">Geführt am Stück: Warm-up → Training → Cool-down.</p>' +
+        '<div class="session-row">' +
+          '<button class="session-btn" data-session="kraft"><span>🏋️</span>Kraft-Tag</button>' +
+          '<button class="session-btn" data-session="cardio"><span>🏃</span>Cardio-Tag</button>' +
+          '<button class="session-btn" data-session="hiit"><span>⚡</span>HIIT-Tag</button>' +
+        '</div>' +
+      '</div>';
+
     const hist = loadHistory().slice(0, 6);
+    const importBtn = '<button class="history-action" data-import-history>⬆︎ Importieren</button>';
     let historyHtml;
     if (hist.length === 0) {
       historyHtml =
         '<div class="home-history">' +
-          '<h4>Dein Verlauf</h4>' +
-          '<p class="history-empty">Noch keine Einheit abgeschlossen. Starte dein erstes Training – es wird hier automatisch festgehalten. 💪</p>' +
+          '<div class="progress-head"><h4>Dein Verlauf</h4>' + importBtn + '</div>' +
+          '<p class="history-empty">Noch keine Einheit abgeschlossen. Starte dein erstes Training – es wird hier automatisch festgehalten. 💪 ' +
+          'Einen gesicherten Verlauf kannst du oben rechts importieren.</p>' +
         '</div>';
     } else {
       const items = hist.map(function (h) {
@@ -122,8 +226,14 @@
       historyHtml =
         '<div class="home-history">' +
           '<div class="progress-head"><h4>Dein Verlauf</h4>' +
-            '<button class="history-clear" data-clear-history>Zurücksetzen</button></div>' +
+            '<span class="history-actions">' +
+              '<button class="history-action" data-export-history>⬇︎ Exportieren</button>' +
+              importBtn +
+              '<button class="history-clear" data-clear-history>Zurücksetzen</button>' +
+            '</span>' +
+          '</div>' +
           '<ul class="history-list">' + items + '</ul>' +
+          '<p class="history-hint">💾 Verlauf liegt lokal auf diesem Gerät. Mit Export/Import nimmst du ihn auf iPhone oder Mac mit.</p>' +
         '</div>';
     }
 
@@ -136,6 +246,8 @@
       '</section>' +
 
       progressHtml +
+
+      sessionHtml +
 
       '<div class="plan-week">' +
         '<div class="plan-day">' +
@@ -238,6 +350,10 @@
       }
       return;
     }
+    if (e.target.closest('[data-export-history]')) { exportHistory(); return; }
+    if (e.target.closest('[data-import-history]')) { fileInput.click(); return; }
+    const session = e.target.closest('[data-session]');
+    if (session) { startSession(session.dataset.session); return; }
     const goto = e.target.closest('[data-goto]');
     if (goto) { setTab(goto.dataset.goto); return; }
     const start = e.target.closest('[data-start]');
@@ -245,6 +361,13 @@
       e.stopPropagation();
       startWorkout(start.dataset.cat, start.dataset.start);
     }
+  });
+
+  /* Versteckter Datei-Input für den Import */
+  const fileInput = document.getElementById('importFile');
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files && fileInput.files[0]) handleImportFile(fileInput.files[0]);
+    fileInput.value = ''; // gleiche Datei erneut wählbar
   });
 
   /* ============================================================ PLAYER ===== */
@@ -292,11 +415,19 @@
     } catch (err) { /* Audio nicht verfügbar – egal */ }
   }
 
-  /* Baut die flache Phasenliste aus einem Workout (inkl. Runden) */
-  function buildSteps(workout) {
+  /* Baut die Phasen eines einzelnen Workouts (ohne abschließendes 'done').
+     segTitle erscheint in der Kopfzeile, readyName/readyDur steuern den Einstieg. */
+  function buildStepsFor(workout, opts) {
+    opts = opts || {};
     const out = [];
     const rounds = workout.rounds || 1;
-    out.push({ type: 'ready', name: 'Bereit machen', detail: workout.title, dur: 10 });
+    out.push({
+      type: 'ready',
+      name: opts.readyName || 'Bereit machen',
+      detail: workout.title,
+      dur: opts.readyDur != null ? opts.readyDur : 10,
+      segTitle: opts.segTitle
+    });
 
     for (let r = 0; r < rounds; r++) {
       workout.exercises.forEach(function (ex) {
@@ -307,33 +438,74 @@
           amount: ex.reps || (ex.work + ' Sekunden'),
           dur: ex.work || 40,
           round: rounds > 1 ? (r + 1) : 0,
-          totalRounds: rounds
+          totalRounds: rounds,
+          segTitle: opts.segTitle
         });
         if (ex.rest && ex.rest > 0) {
-          out.push({ type: 'rest', name: 'Pause', detail: 'Durchatmen & locker bleiben', dur: ex.rest });
+          out.push({ type: 'rest', name: 'Pause', detail: 'Durchatmen & locker bleiben', dur: ex.rest, segTitle: opts.segTitle });
         }
       });
     }
-    out.push({ type: 'done', name: 'Geschafft!', detail: workout.title, dur: 0 });
     return out;
   }
 
-  function startWorkout(cat, id) {
-    const workout = (WORKOUTS[cat] || []).find(function (w) { return w.id === id; });
-    if (!workout) return;
-    steps = buildSteps(workout);
+  /* Komplette Einheit: Warm-up → Haupt-Training → Cool-down */
+  const SESSIONS = {
+    kraft:  { title: 'Komplette Einheit · Kraft',  cat: 'kraft',
+      items: [['warmup', 'warmup-mobility'], ['kraft', 'kraft-ganzkoerper'], ['cooldown', 'cooldown-legs']] },
+    cardio: { title: 'Komplette Einheit · Cardio', cat: 'cardio',
+      items: [['warmup', 'warmup-mobility'], ['cardio', 'cardio-kb-flow'], ['cooldown', 'cooldown-stretch']] },
+    hiit:   { title: 'Komplette Einheit · HIIT',   cat: 'hiit',
+      items: [['warmup', 'warmup-mobility'], ['hiit', 'hiit-kettlebell'], ['cooldown', 'cooldown-stretch']] }
+  };
+
+  function findWorkout(cat, id) {
+    return (WORKOUTS[cat] || []).find(function (w) { return w.id === id; });
+  }
+
+  function openPlayer(title) {
     idx = 0;
-    currentWorkout = { cat: cat, title: workout.title, minutes: workout.minutes };
     currentSaved = false;
-    player.title.textContent = workout.title;
+    player.title.textContent = title;
     player.el.hidden = false;
     document.body.style.overflow = 'hidden';
-    // Audio bei User-Geste freischalten
     try {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       if (audioCtx.state === 'suspended') audioCtx.resume();
     } catch (err) {}
     loadStep(0, false);
+  }
+
+  function startWorkout(cat, id) {
+    const workout = findWorkout(cat, id);
+    if (!workout) return;
+    steps = buildStepsFor(workout, { segTitle: workout.title });
+    steps.push({ type: 'done', name: 'Geschafft!', detail: workout.title, dur: 0 });
+    currentWorkout = { cat: cat, title: workout.title, minutes: workout.minutes };
+    openPlayer(workout.title);
+  }
+
+  function startSession(key) {
+    const plan = SESSIONS[key];
+    if (!plan) return;
+    const workouts = plan.items
+      .map(function (it) { return findWorkout(it[0], it[1]); })
+      .filter(Boolean);
+    if (workouts.length === 0) return;
+
+    steps = [];
+    let totalMin = 0;
+    workouts.forEach(function (w, i) {
+      totalMin += (w.minutes || 0);
+      steps = steps.concat(buildStepsFor(w, {
+        segTitle: w.title,
+        readyName: i === 0 ? 'Bereit machen' : 'Weiter: ' + w.title,
+        readyDur: i === 0 ? 10 : 8
+      }));
+    });
+    steps.push({ type: 'done', name: 'Geschafft!', detail: plan.title, dur: 0 });
+    currentWorkout = { cat: plan.cat, title: plan.title, minutes: totalMin };
+    openPlayer(plan.title);
   }
 
   function workSteps() {
@@ -346,6 +518,9 @@
     const s = steps[i];
 
     if (s.type === 'done') { showDone(); return; }
+
+    // Kopfzeile pro Segment aktualisieren (z. B. bei kompletter Einheit)
+    if (s.segTitle) player.title.textContent = s.segTitle;
 
     // Phase-Label
     let phaseLabel = 'Übung';

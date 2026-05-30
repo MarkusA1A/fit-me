@@ -261,6 +261,61 @@ main {
   flex-wrap: wrap;
 }
 .progress-cheer { margin: 12px 0 0; color: #3ddc97; font-weight: 700; font-size: 14px; }
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #ffd9a8;
+  background: linear-gradient(90deg, rgba(255,138,61,0.22), rgba(255,93,115,0.18));
+  border: 1px solid rgba(255,138,61,0.35);
+}
+.streak-badge strong { color: #fff; font-size: 16px; }
+
+/* Komplette Einheit */
+.home-session {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+}
+.home-session h4 { margin: 0; font-size: 16px; }
+.session-sub { margin: 4px 0 14px; color: var(--muted); font-size: 14px; }
+.session-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.session-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--card-2);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.session-btn span { font-size: 24px; }
+.session-btn:active { transform: scale(0.96); }
+
+/* Verlauf-Aktionen */
+.history-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.history-action {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: #cdd6ff;
+  font-size: 13px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.history-action:active { transform: scale(0.96); }
+.history-hint { margin: 14px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
 
 .home-history {
   background: var(--card);
