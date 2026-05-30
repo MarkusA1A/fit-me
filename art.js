@@ -10,12 +10,18 @@
 (function (global) {
   'use strict';
 
+  // Inline-Präsentationsattribute machen die Figuren selbsttragend:
+  // sichtbar auch ganz ohne CSS. CSS-Klassen übersteuern für das Theming.
+  const STROKE = '#5b8cff';   // Körper/Linien
+  const ACCENT = '#ff8a3d';   // Gewicht/Kugel
+  const FLOORC = 'rgba(120,130,170,0.55)';
+
   function L(x1, y1, x2, y2) {
     return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"/>';
   }
-  function H(x, y) { return '<circle class="head" cx="' + x + '" cy="' + y + '" r="8"/>'; }
-  function B(x, y, r) { return '<circle class="ball" cx="' + x + '" cy="' + y + '" r="' + (r || 6) + '"/>'; }
-  function floor(y) { return '<line class="floor" x1="12" y1="' + (y || 104) + '" x2="88" y2="' + (y || 104) + '"/>'; }
+  function H(x, y) { return '<circle class="head" cx="' + x + '" cy="' + y + '" r="8" fill="' + STROKE + '" stroke="none"/>'; }
+  function B(x, y, r) { return '<circle class="ball" cx="' + x + '" cy="' + y + '" r="' + (r || 6) + '" fill="' + ACCENT + '" stroke="none"/>'; }
+  function floor(y) { return '<line class="floor" x1="12" y1="' + (y || 104) + '" x2="88" y2="' + (y || 104) + '" stroke="' + FLOORC + '" stroke-width="3"/>'; }
   // animateTransform-Helfer
   function AT(type, values, dur, extra) {
     return '<animateTransform attributeName="transform" type="' + type +
@@ -23,7 +29,8 @@
   }
   function G(anim, content) { return '<g>' + anim + content + '</g>'; }
   function svg(inner) {
-    return '<svg class="fig" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + inner + '</svg>';
+    return '<svg class="fig" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"' +
+      ' fill="none" stroke="' + STROKE + '" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>';
   }
 
   const ART = {
