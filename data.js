@@ -17,7 +17,8 @@ const TIPS = {
   warmup: 'Nie kalt starten: 5–8 Minuten Warm-up senken das Verletzungsrisiko und bringen Kraft & Beweglichkeit sofort nach oben.',
   cardio: 'Atme gleichmäßig. Tempo so wählen, dass du noch kurze Sätze sprechen könntest – das ist deine Cardio-Zone.',
   kraft: 'Technik vor Gewicht. Lieber sauber und kontrolliert als schwer und schludrig. Ausatmen in der Anstrengung.',
-  hiit: 'Voller Einsatz in der Arbeitsphase, echte Erholung in der Pause. Qualität schlägt Wiederholungen.'
+  hiit: 'Voller Einsatz in der Arbeitsphase, echte Erholung in der Pause. Qualität schlägt Wiederholungen.',
+  cooldown: 'Nach dem Training runterkommen: ruhig dehnen, tief atmen, jede Position sanft halten – nie in den Schmerz ziehen.'
 };
 
 const WORKOUTS = {
@@ -205,6 +206,42 @@ const WORKOUTS = {
         { name: 'Burpees (oder Step-Backs)', work: 35, rest: 25, detail: 'Volle Bewegung. Knieschonend: ohne Sprung, Schritt zurück.' }
       ]
     }
+  ],
+
+  /* --------------------------------------------------------------- COOL-DOWN */
+  cooldown: [
+    {
+      id: 'cooldown-stretch',
+      title: 'Stretching & Runterkommen',
+      level: 'Sanft',
+      minutes: 7,
+      focus: 'Ganzkörper · nach jedem Training',
+      desc: 'Bringt Puls und Atmung zur Ruhe und dehnt die wichtigsten Muskelgruppen. Jede Position ruhig halten, nie reißen.',
+      exercises: [
+        { name: 'Locker ausgehen / lockeres Marschieren', work: 45, rest: 0, detail: 'Puls bewusst herunterfahren, tief in den Bauch atmen.' },
+        { name: 'Schulter-Nacken-Dehnung', work: 40, rest: 0, detail: 'Kopf sanft zur Seite neigen, je 20 Sek. pro Seite. Schultern locker.' },
+        { name: 'Brust-Dehnung an der Wand', work: 40, rest: 0, detail: 'Unterarm an die Wand, Oberkörper leicht wegdrehen. Seiten wechseln.' },
+        { name: 'Stehende Vorbeuge', work: 40, rest: 0, detail: 'Knie leicht gebeugt, Oberkörper locker hängen lassen, Rücken & Beinrückseite.' },
+        { name: 'Quadrizeps-Dehnung im Stand', work: 40, rest: 0, detail: 'Fuß zum Po, Knie nach hinten. Je 20 Sek. pro Seite, ruhig halten.' },
+        { name: 'Hüftbeuger-Dehnung (Ausfallschritt)', work: 50, rest: 0, detail: 'Tiefer Ausfallschritt, Hüfte nach vorn schieben. Seiten wechseln.' },
+        { name: 'Tiefes Atmen im Sitzen', work: 45, rest: 0, detail: '4 Sek. ein, 6 Sek. aus. Bewusst entspannen – Einheit ausklingen lassen.' }
+      ]
+    },
+    {
+      id: 'cooldown-legs',
+      title: 'Bein-Cool-down',
+      level: 'Sanft',
+      minutes: 6,
+      focus: 'Beine · nach Kraft- & Bein-Training',
+      desc: 'Gezieltes Dehnen für Oberschenkel und Waden nach der Beinmaschine oder Kettlebell-Beinarbeit.',
+      exercises: [
+        { name: 'Quadrizeps-Dehnung (vorne)', work: 50, rest: 0, detail: 'Fuß zum Po ziehen, je 25 Sek. pro Seite. Knie zeigt nach unten.' },
+        { name: 'Beinrückseiten-Dehnung', work: 50, rest: 0, detail: 'Ferse auf eine Erhöhung, Oberkörper sanft Richtung Fuß. Seiten wechseln.' },
+        { name: 'Waden-Dehnung an der Wand', work: 50, rest: 0, detail: 'Hinteres Bein gestreckt, Ferse am Boden. Je 25 Sek. pro Seite.' },
+        { name: 'Adduktoren-Dehnung (breiter Stand)', work: 45, rest: 0, detail: 'Breiter Stand, Gewicht auf eine Seite verlagern. Innenseite dehnen.' },
+        { name: 'Gesäß-Dehnung im Sitzen', work: 50, rest: 0, detail: 'Knöchel aufs andere Knie, leicht vorbeugen. Je 25 Sek. pro Seite.' }
+      ]
+    }
   ]
 };
 
@@ -212,5 +249,6 @@ const CATEGORY_META = {
   warmup: { label: 'Warm-up', emoji: '🔥', color: '#ff8a3d', sub: 'Immer zuerst – 5–8 Minuten vorbereiten' },
   cardio: { label: 'Cardio', emoji: '🏃', color: '#3ddc97', sub: 'Ausdauer & Kreislauf' },
   kraft:  { label: 'Kraft', emoji: '🏋️', color: '#5b8cff', sub: 'Kettlebells & Beinmaschine' },
-  hiit:   { label: 'HIIT', emoji: '⚡', color: '#ff5d73', sub: 'High Intensity Intervalle' }
+  hiit:   { label: 'HIIT', emoji: '⚡', color: '#ff5d73', sub: 'High Intensity Intervalle' },
+  cooldown: { label: 'Cool-down', emoji: '🧘', color: '#9d7bff', sub: 'Dehnen & runterkommen – zum Schluss' }
 };

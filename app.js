@@ -6,6 +6,55 @@
   const view = document.getElementById('view');
   const tabsEl = document.getElementById('tabs');
 
+  /* ----------------------------------------------------- Verlauf / Fortschritt */
+  const HISTORY_KEY = 'fitme-history';
+
+  function loadHistory() {
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { return []; }
+  }
+
+  function saveHistory(arr) {
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(arr.slice(0, 200))); } catch (e) {}
+  }
+
+  function recordWorkout(entry) {
+    const hist = loadHistory();
+    hist.unshift(entry); // neueste zuerst
+    saveHistory(hist);
+  }
+
+  function startOfWeek(d) {
+    const x = new Date(d);
+    const day = (x.getDay() + 6) % 7; // Montag = 0
+    x.setHours(0, 0, 0, 0);
+    x.setDate(x.getDate() - day);
+    return x;
+  }
+
+  function weekStats() {
+    const hist = loadHistory();
+    const monday = startOfWeek(new Date()).getTime();
+    let sessions = 0, minutes = 0;
+    hist.forEach(function (h) {
+      if (h.ts >= monday) { sessions++; minutes += (h.minutes || 0); }
+    });
+    return { sessions: sessions, minutes: minutes, total: hist.length };
+  }
+
+  function relativeDay(ts) {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const d = new Date(ts); d.setHours(0, 0, 0, 0);
+    const diff = Math.round((today - d) / 86400000);
+    if (diff === 0) return 'Heute';
+    if (diff === 1) return 'Gestern';
+    if (diff < 7) return 'vor ' + diff + ' Tagen';
+    return new Date(ts).toLocaleDateString('de-DE', { day: '2-digit', month: 'short' });
+  }
+
   /* ---------------------------------------------------------- Datum-Header */
   (function setToday() {
     const el = document.getElementById('todayInfo');
@@ -22,7 +71,7 @@
   }
 
   function renderHome() {
-    const tiles = ['warmup', 'cardio', 'kraft', 'hiit'].map(function (key) {
+    const tiles = ['warmup', 'cardio', 'kraft', 'hiit', 'cooldown'].map(function (key) {
       const m = CATEGORY_META[key];
       return (
         '<div class="cat-tile" data-goto="' + key + '">' +
@@ -33,12 +82,60 @@
       );
     }).join('');
 
+    // Fortschritt diese Woche + Verlauf
+    const st = weekStats();
+    const goal = 2; // 2× pro Woche
+    const progressPct = Math.min(100, Math.round((st.sessions / goal) * 100));
+    const progressHtml =
+      '<div class="home-progress">' +
+        '<div class="progress-head">' +
+          '<h4>Diese Woche</h4>' +
+          '<span class="progress-goal">' + st.sessions + ' / ' + goal + ' Einheiten</span>' +
+        '</div>' +
+        '<div class="progress-bar"><span style="width:' + progressPct + '%"></span></div>' +
+        '<div class="progress-stats">' +
+          '<span>🔥 ' + st.minutes + ' Min diese Woche</span>' +
+          '<span>🏅 ' + st.total + ' Einheiten gesamt</span>' +
+        '</div>' +
+        (st.sessions >= goal ? '<p class="progress-cheer">🎉 Wochenziel erreicht – stark!</p>' : '') +
+      '</div>';
+
+    const hist = loadHistory().slice(0, 6);
+    let historyHtml;
+    if (hist.length === 0) {
+      historyHtml =
+        '<div class="home-history">' +
+          '<h4>Dein Verlauf</h4>' +
+          '<p class="history-empty">Noch keine Einheit abgeschlossen. Starte dein erstes Training – es wird hier automatisch festgehalten. 💪</p>' +
+        '</div>';
+    } else {
+      const items = hist.map(function (h) {
+        const m = CATEGORY_META[h.cat] || { emoji: '✅', label: h.cat };
+        return (
+          '<li class="history-item">' +
+            '<span class="hist-emoji" style="background:' + ((CATEGORY_META[h.cat] || {}).color || '#5b8cff') + '22">' + m.emoji + '</span>' +
+            '<span class="hist-main"><strong>' + h.title + '</strong><em>' + m.label + ' · ' + h.minutes + ' Min</em></span>' +
+            '<span class="hist-day">' + relativeDay(h.ts) + '</span>' +
+          '</li>'
+        );
+      }).join('');
+      historyHtml =
+        '<div class="home-history">' +
+          '<div class="progress-head"><h4>Dein Verlauf</h4>' +
+            '<button class="history-clear" data-clear-history>Zurücksetzen</button></div>' +
+          '<ul class="history-list">' + items + '</ul>' +
+        '</div>';
+    }
+
     view.innerHTML =
       '<section class="home-hero">' +
         '<h2>Willkommen zurück! 👋</h2>' +
         '<p>Ich bin dein virtueller Coach. Wir trainieren 2× pro Woche je ca. 30 Minuten. ' +
-        'Starte <strong>immer</strong> mit einem Warm-up, wähle dann Cardio, Kraft oder HIIT.</p>' +
+        'Starte <strong>immer</strong> mit einem Warm-up, wähle dann Cardio, Kraft oder HIIT – ' +
+        'und beende die Einheit mit einem Cool-down.</p>' +
       '</section>' +
+
+      progressHtml +
 
       '<div class="plan-week">' +
         '<div class="plan-day">' +
@@ -64,7 +161,9 @@
           '<span class="equip-tag">🦿 Beinstrecker</span>' +
           '<span class="equip-tag">🧍 Eigengewicht</span>' +
         '</div>' +
-      '</div>';
+      '</div>' +
+
+      historyHtml;
   }
 
   function renderCategory(key) {
@@ -131,6 +230,14 @@
   });
 
   view.addEventListener('click', function (e) {
+    const clear = e.target.closest('[data-clear-history]');
+    if (clear) {
+      if (window.confirm('Trainings-Verlauf wirklich löschen?')) {
+        saveHistory([]);
+        renderHome();
+      }
+      return;
+    }
     const goto = e.target.closest('[data-goto]');
     if (goto) { setTab(goto.dataset.goto); return; }
     const start = e.target.closest('[data-start]');
@@ -166,6 +273,8 @@
   let ticking = false;
   let timer = null;
   let audioCtx = null;
+  let currentWorkout = null; // für den Verlauf
+  let currentSaved = false;
 
   function beep(freq, dur) {
     try {
@@ -214,6 +323,8 @@
     if (!workout) return;
     steps = buildSteps(workout);
     idx = 0;
+    currentWorkout = { cat: cat, title: workout.title, minutes: workout.minutes };
+    currentSaved = false;
     player.title.textContent = workout.title;
     player.el.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -337,6 +448,16 @@
 
   function showDone() {
     stopTick();
+    // Einheit im Verlauf festhalten (nur einmal)
+    if (currentWorkout && !currentSaved) {
+      recordWorkout({
+        ts: Date.now(),
+        cat: currentWorkout.cat,
+        title: currentWorkout.title,
+        minutes: currentWorkout.minutes
+      });
+      currentSaved = true;
+    }
     beep(660, 0.15);
     setTimeout(function () { beep(880, 0.25); }, 160);
     player.stage.innerHTML =
@@ -357,6 +478,9 @@
     document.body.style.overflow = '';
     // Stage zurücksetzen (Done-Ansicht ersetzt das Markup)
     restoreStage();
+    // Aktive Ansicht neu rendern, damit ein frischer Verlauf sichtbar wird
+    const active = tabsEl.querySelector('.tab.is-active');
+    if (active) render(active.dataset.tab);
   }
 
   // Original-Stage-Markup sichern, um nach "Done" zurückzusetzen

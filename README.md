@@ -11,6 +11,10 @@ Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
 - **🏃 Cardio** – Ausdauer & Kreislauf, von gelenkschonend bis Intervalle.
 - **🏋️ Kraft** – Kettlebells + Beinbeuger/Beinstrecker, Ganzkörper & Bein-Fokus.
 - **⚡ HIIT** – High-Intensity-Intervalle (Tabata, EMOM, Kettlebell-HIIT).
+- **🧘 Cool-down als eigene Sektion** – zum Schluss: Stretching & runterkommen,
+  inkl. speziellem Bein-Cool-down nach der Beinmaschine.
+- **📊 Fortschritt & Verlauf** – Wochenziel (2×), Minuten und Einheiten werden
+  automatisch lokal auf dem iPad gespeichert und auf der Startseite angezeigt.
 - **⏱ Geführter Workout-Player** mit Timer-Ring, Arbeits-/Pausenphasen,
   Runden, Audio-Signalen und Übungs-Hinweisen.
 - **📲 Installierbar** auf dem iPad-Homescreen (PWA, läuft im Vollbild).
@@ -30,7 +34,8 @@ Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
 3. Tippe auf eine Kachel, starte das Training und folge dem Timer.
 
 > Tipp: Beginne jede Einheit mit dem **Warm-up**, wähle danach Cardio, Kraft
-> oder HIIT. Cool-down nach dem Training nicht vergessen.
+> oder HIIT und schließe mit dem **Cool-down** ab. Jede abgeschlossene Einheit
+> landet automatisch in deinem **Verlauf** auf der Startseite.
 
 ## Trainings anpassen
 
