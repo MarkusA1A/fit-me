@@ -155,7 +155,7 @@
   }
 
   function renderHome() {
-    const tiles = ['warmup', 'cardio', 'kraft', 'hiit', 'cooldown'].map(function (key) {
+    const tiles = ['warmup', 'cardio', 'kraft', 'hiit', 'rudern', 'cooldown'].map(function (key) {
       const m = CATEGORY_META[key];
       return (
         '<div class="cat-tile" data-goto="' + key + '">' +
@@ -199,6 +199,7 @@
           '<button class="session-btn" data-session="kraft"><span>🏋️</span>Kraft-Tag</button>' +
           '<button class="session-btn" data-session="cardio"><span>🏃</span>Cardio-Tag</button>' +
           '<button class="session-btn" data-session="hiit"><span>⚡</span>HIIT-Tag</button>' +
+          '<button class="session-btn" data-session="rudern"><span>🚣</span>Ruder-Tag</button>' +
         '</div>' +
       '</div>';
 
@@ -271,6 +272,7 @@
           '<span class="equip-tag">🔔 Kettlebells (versch. kg)</span>' +
           '<span class="equip-tag">🦵 Beinbeuger</span>' +
           '<span class="equip-tag">🦿 Beinstrecker</span>' +
+          '<span class="equip-tag">🚣 Waterrower (zuhause)</span>' +
           '<span class="equip-tag">🧍 Eigengewicht</span>' +
         '</div>' +
       '</div>' +
@@ -456,7 +458,9 @@
     cardio: { title: 'Komplette Einheit · Cardio', cat: 'cardio',
       items: [['warmup', 'warmup-mobility'], ['cardio', 'cardio-kb-flow'], ['cooldown', 'cooldown-stretch']] },
     hiit:   { title: 'Komplette Einheit · HIIT',   cat: 'hiit',
-      items: [['warmup', 'warmup-mobility'], ['hiit', 'hiit-kettlebell'], ['cooldown', 'cooldown-stretch']] }
+      items: [['warmup', 'warmup-mobility'], ['hiit', 'hiit-kettlebell'], ['cooldown', 'cooldown-stretch']] },
+    rudern: { title: 'Komplette Einheit · Rudern', cat: 'rudern',
+      items: [['warmup', 'warmup-mobility'], ['rudern', 'rudern-intervall'], ['cooldown', 'cooldown-stretch']] }
   };
 
   function findWorkout(cat, id) {

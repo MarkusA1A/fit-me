@@ -285,7 +285,7 @@ main {
 }
 .home-session h4 { margin: 0; font-size: 16px; }
 .session-sub { margin: 4px 0 14px; color: var(--muted); font-size: 14px; }
-.session-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.session-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: 10px; }
 .session-btn {
   display: flex;
   flex-direction: column;

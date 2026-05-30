@@ -18,6 +18,7 @@ const TIPS = {
   cardio: 'Atme gleichmäßig. Tempo so wählen, dass du noch kurze Sätze sprechen könntest – das ist deine Cardio-Zone.',
   kraft: 'Technik vor Gewicht. Lieber sauber und kontrolliert als schwer und schludrig. Ausatmen in der Anstrengung.',
   hiit: 'Voller Einsatz in der Arbeitsphase, echte Erholung in der Pause. Qualität schlägt Wiederholungen.',
+  rudern: 'Kraft kommt aus den Beinen: erst drücken, dann Körper zurück, zuletzt Arme ziehen. Zurück in umgekehrter Reihenfolge. Ruhiger, kräftiger Zug schlägt hektisches Reißen.',
   cooldown: 'Nach dem Training runterkommen: ruhig dehnen, tief atmen, jede Position sanft halten – nie in den Schmerz ziehen.'
 };
 
@@ -208,6 +209,65 @@ const WORKOUTS = {
     }
   ],
 
+  /* ------------------------------------------------------------------ RUDERN */
+  rudern: [
+    {
+      id: 'rudern-steady',
+      title: 'Steady-State Rudern',
+      level: 'Einsteiger',
+      minutes: 28,
+      focus: 'Waterrower · gleichmäßige Ausdauer',
+      desc: 'Ruhiges Dauer-Rudern in konstantem Tempo. Baut Grundlagenausdauer auf und schult einen sauberen Ruderschlag.',
+      rounds: 3,
+      exercises: [
+        { name: 'Locker einrudern', work: 120, rest: 30, detail: 'Ruhiges Tempo (ca. 20–22 Schläge/Min). In den Rhythmus finden, gleichmäßig atmen.' },
+        { name: 'Steady-State Block', work: 180, rest: 40, detail: 'Konstantes, angenehm forderndes Tempo. Sauberer Zug: Beine → Rumpf → Arme.' },
+        { name: 'Kontroll-Block (Technik)', work: 120, rest: 30, detail: 'Bewusst auf saubere Reihenfolge achten. Langer Gleit-Weg, ruhige Erholungsphase.' }
+      ]
+    },
+    {
+      id: 'rudern-intervall',
+      title: 'Ruder-Intervalle',
+      level: 'Mittel',
+      minutes: 30,
+      focus: 'Waterrower · Tempo-Wechsel',
+      desc: 'Wechsel aus kräftigen und ruhigen Phasen treibt Kondition und Watt-Leistung. Push hart, erhol dich aktiv.',
+      rounds: 5,
+      exercises: [
+        { name: 'Aktiv rudern (zügig)', work: 60, rest: 0, detail: 'Erhöhtes Tempo (ca. 26–28 Schläge/Min), kräftiger Beindruck.' },
+        { name: 'Locker rudern (Erholung)', work: 60, rest: 0, detail: 'Tempo deutlich rausnehmen, Puls bewusst senken. Weiter gleichmäßig ziehen.' },
+        { name: 'Sprint-Push', work: 30, rest: 30, detail: 'Kurz alles geben – starker, schneller Zug. Danach komplett ausrudern.' }
+      ]
+    },
+    {
+      id: 'rudern-hiit',
+      title: 'Ruder-HIIT (500 m Power)',
+      level: 'Intensiv',
+      minutes: 26,
+      focus: 'Waterrower · High Intensity',
+      desc: 'Intensive Intervalle am Wasserwiderstand. Kurze, harte Belastungen mit echter Erholung – ideal als HIIT-Einheit.',
+      rounds: 6,
+      exercises: [
+        { name: 'Power-Intervall (hart)', work: 40, rest: 20, detail: 'Vollgas: explosiver Beindruck, kräftiger Zug. Hoher Wasserwiderstand spürbar.' },
+        { name: 'Aktive Erholung am Gerät', work: 40, rest: 0, detail: 'Ganz locker weiterrudern, tief atmen, Puls runterfahren.' }
+      ]
+    },
+    {
+      id: 'rudern-kombi',
+      title: 'Rudern + Kettlebell Kombi',
+      level: 'Fortgeschritten',
+      minutes: 30,
+      focus: 'Waterrower & Kettlebell · Ganzkörper',
+      desc: 'Cardio am Ruderer im Wechsel mit Kraft an der Kettlebell. Hält den Puls oben und fordert den ganzen Körper.',
+      rounds: 4,
+      exercises: [
+        { name: 'Rudern zügig', work: 90, rest: 15, detail: 'Gleichmäßig kräftiges Tempo am Waterrower. Sauberer Durchzug.' },
+        { name: 'Kettlebell Swings', work: 40, rest: 20, detail: 'Vom Ruderer absteigen, explosiver Hüftstoß. Mittleres Gewicht.' },
+        { name: 'Goblet Squat', work: 40, rest: 25, detail: 'Kugel vor der Brust, tiefe kontrollierte Kniebeuge.' }
+      ]
+    }
+  ],
+
   /* --------------------------------------------------------------- COOL-DOWN */
   cooldown: [
     {
@@ -250,5 +310,6 @@ const CATEGORY_META = {
   cardio: { label: 'Cardio', emoji: '🏃', color: '#3ddc97', sub: 'Ausdauer & Kreislauf' },
   kraft:  { label: 'Kraft', emoji: '🏋️', color: '#5b8cff', sub: 'Kettlebells & Beinmaschine' },
   hiit:   { label: 'HIIT', emoji: '⚡', color: '#ff5d73', sub: 'High Intensity Intervalle' },
+  rudern: { label: 'Rudern', emoji: '🚣', color: '#34c3d6', sub: 'Waterrower · Cardio & HIIT' },
   cooldown: { label: 'Cool-down', emoji: '🧘', color: '#9d7bff', sub: 'Dehnen & runterkommen – zum Schluss' }
 };
