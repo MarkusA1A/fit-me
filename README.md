@@ -24,6 +24,9 @@ Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
   wieder einladen (kein Server, keine Anmeldung nötig).
 - **⏱ Geführter Workout-Player** mit Timer-Ring, Arbeits-/Pausenphasen,
   Runden, Audio-Signalen und Übungs-Hinweisen.
+- **🤸 Animierte Bewegungs-Figuren** – jede Übung wird als animierte
+  Strichfigur gezeigt (im Player groß, in den Listen als Vorschau).
+  Selbst gezeichnet (SVG), funktioniert offline.
 - **📲 Installierbar** auf dem iPad-Homescreen (PWA, läuft im Vollbild).
 
 ## Deine Ausrüstung (im Büro)
@@ -67,6 +70,7 @@ Coaching-Hinweise lassen sich dort einfach ändern oder erweitern.
 | `index.html` | Grundgerüst & Workout-Player |
 | `styles.css` | Design (Dark, touch-freundlich) |
 | `data.js` | Alle Trainingspläne & Übungen |
+| `art.js` | Animierte Übungs-Figuren (SVG) |
 | `app.js` | App-Logik & Timer |
 | `manifest.webmanifest` / `icon.svg` | PWA / Homescreen-Icon |
 

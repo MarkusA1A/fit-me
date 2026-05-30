@@ -287,7 +287,8 @@
 
     const cards = list.map(function (w) {
       const exPreview = w.exercises.slice(0, 5).map(function (ex) {
-        return '<li><span>' + ex.name + '</span><span class="ex-amt">' + fmtAmount(ex) + '</span></li>';
+        const thumb = '<span class="ex-thumb">' + getExerciseArt(pickExerciseArt(ex.name, key)) + '</span>';
+        return '<li>' + thumb + '<span class="ex-name">' + ex.name + '</span><span class="ex-amt">' + fmtAmount(ex) + '</span></li>';
       }).join('');
       const more = w.exercises.length > 5
         ? '<li><span style="color:var(--muted)">+ ' + (w.exercises.length - 5) + ' weitere</span><span></span></li>'
@@ -380,6 +381,7 @@
     stepCount: document.getElementById('playerStepCount'),
     stage: document.getElementById('playerStage'),
     phase: document.getElementById('playerPhase'),
+    figure: document.getElementById('playerFigure'),
     exercise: document.getElementById('playerExercise'),
     detail: document.getElementById('playerDetail'),
     next: document.getElementById('playerNext'),
@@ -429,6 +431,7 @@
       name: opts.readyName || 'Bereit machen',
       detail: workout.title,
       dur: opts.readyDur != null ? opts.readyDur : 10,
+      art: 'ready',
       segTitle: opts.segTitle
     });
 
@@ -440,13 +443,14 @@
           detail: ex.detail || '',
           amount: ex.reps || (ex.work + ' Sekunden'),
           goal: ex.goal || '',
+          art: pickExerciseArt(ex.name, opts.cat),
           dur: ex.work || 40,
           round: rounds > 1 ? (r + 1) : 0,
           totalRounds: rounds,
           segTitle: opts.segTitle
         });
         if (ex.rest && ex.rest > 0) {
-          out.push({ type: 'rest', name: 'Pause', detail: 'Durchatmen & locker bleiben', dur: ex.rest, segTitle: opts.segTitle });
+          out.push({ type: 'rest', name: 'Pause', detail: 'Durchatmen & locker bleiben', dur: ex.rest, art: 'rest', segTitle: opts.segTitle });
         }
       });
     }
@@ -485,7 +489,7 @@
   function startWorkout(cat, id) {
     const workout = findWorkout(cat, id);
     if (!workout) return;
-    steps = buildStepsFor(workout, { segTitle: workout.title });
+    steps = buildStepsFor(workout, { segTitle: workout.title, cat: cat });
     steps.push({ type: 'done', name: 'Geschafft!', detail: workout.title, dur: 0 });
     currentWorkout = { cat: cat, title: workout.title, minutes: workout.minutes };
     openPlayer(workout.title);
@@ -494,18 +498,19 @@
   function startSession(key) {
     const plan = SESSIONS[key];
     if (!plan) return;
-    const workouts = plan.items
-      .map(function (it) { return findWorkout(it[0], it[1]); })
-      .filter(Boolean);
-    if (workouts.length === 0) return;
+    const parts = plan.items
+      .map(function (it) { return { cat: it[0], w: findWorkout(it[0], it[1]) }; })
+      .filter(function (p) { return p.w; });
+    if (parts.length === 0) return;
 
     steps = [];
     let totalMin = 0;
-    workouts.forEach(function (w, i) {
-      totalMin += (w.minutes || 0);
-      steps = steps.concat(buildStepsFor(w, {
-        segTitle: w.title,
-        readyName: i === 0 ? 'Bereit machen' : 'Weiter: ' + w.title,
+    parts.forEach(function (p, i) {
+      totalMin += (p.w.minutes || 0);
+      steps = steps.concat(buildStepsFor(p.w, {
+        segTitle: p.w.title,
+        cat: p.cat,
+        readyName: i === 0 ? 'Bereit machen' : 'Weiter: ' + p.w.title,
         readyDur: i === 0 ? 10 : 8
       }));
     });
@@ -543,6 +548,12 @@
     }
     if (s.round) phaseLabel += ' · Runde ' + s.round + '/' + s.totalRounds;
     player.phase.textContent = phaseLabel;
+
+    // Bewegungs-Illustration zur Übung anzeigen
+    if (player.figure) {
+      player.figure.innerHTML = getExerciseArt(s.art || 'generic');
+      player.figure.classList.toggle('is-rest', s.type === 'rest');
+    }
 
     player.exercise.textContent = s.name;
     player.detail.textContent = s.detail;
@@ -672,6 +683,7 @@
     player.stage.innerHTML = stageOriginal;
     // Referenzen neu binden
     player.phase = document.getElementById('playerPhase');
+    player.figure = document.getElementById('playerFigure');
     player.exercise = document.getElementById('playerExercise');
     player.detail = document.getElementById('playerDetail');
     player.next = document.getElementById('playerNext');
