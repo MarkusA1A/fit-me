@@ -11,6 +11,8 @@ Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
 - **🏃 Cardio** – Ausdauer & Kreislauf, von gelenkschonend bis Intervalle.
 - **🏋️ Kraft** – Kettlebells + Beinbeuger/Beinstrecker, Ganzkörper & Bein-Fokus.
 - **⚡ HIIT** – High-Intensity-Intervalle (Tabata, EMOM, Kettlebell-HIIT).
+- **🤸 Eigengewicht** – Training ganz ohne Geräte: Ganzkörper, Core & HIIT
+  (Liegestütze, Squats, Plank, Crunches, Superman, Bird-Dog u. v. m.).
 - **🚣 Rudern** – Trainings für den Waterrower: Steady-State, Intervalle,
   Ruder-HIIT und eine Rudern-+-Kettlebell-Kombi.
 - **🧘 Cool-down als eigene Sektion** – zum Schluss: Stretching & runterkommen,

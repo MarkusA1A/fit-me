@@ -214,7 +214,76 @@
 
     /* Pause – sitzend durchatmen */
     rest: svg(floor(100) + H(50, 40) + L(50, 48, 50, 72) + L(50, 72, 74, 78) + L(74, 78, 74, 100) +
-      G(AT('translate', '0 0;0 -2;0 0', '3s'), L(50, 52, 40, 62) + L(50, 52, 60, 62)))
+      G(AT('translate', '0 0;0 -2;0 0', '3s'), L(50, 52, 40, 62) + L(50, 52, 60, 62))),
+
+    /* Liegestütze – Körper als gerade Linie, hoch & runter (Arme beugen) */
+    pushup: (function () {
+      var d = '1.6s';
+      // Hände fix bei x=24, Füße fix bei x=92; Schulter senkt sich beim Beugen
+      var arm   = AL('24;24;24', '98;98;98', '34;30;34', '70;82;70', d); // Hand → Schulter
+      var body  = AL('34;30;34', '70;82;70', '92;92;92', '88;96;88', d); // Schulter → Ferse
+      var head  = AH('28;26;28', '64;76;64', d);
+      return svg(floor(100) + arm + body + head);
+    })(),
+
+    /* Glute Bridge – Rücken liegt, Hüfte hebt sich */
+    bridge: (function () {
+      var d = '1.8s';
+      var shoulder = '34', shy = '92';
+      var torso = AL(shoulder + ';' + shoulder + ';' + shoulder, shy + ';' + shy + ';' + shy, '58;58;58', '88;64;88', d); // Schulter → Hüfte hebt
+      var thigh = AL('58;58;58', '88;64;88', '74;74;74', '92;78;92', d); // Hüfte → Knie
+      var shin  = L(74, 92, 74, 100) + L(74, 100, 84, 100);              // Unterschenkel/Fuß fix
+      var head  = H(28, 90);
+      return svg(floor(100) + torso + thigh + shin + head);
+    })(),
+
+    /* Crunch – liegend, Schultern heben Richtung Knie */
+    crunch: (function () {
+      var d = '1.5s';
+      var torso = AL('30;30;30', '94;94;94', '50;54;50', '82;72;82', d); // Hüfte fix → Schulter hebt
+      var arm   = AL('50;54;50', '82;72;82', '58;60;58', '74;66;74', d); // Schulter → Hand (am Kopf)
+      var head  = AH('52;57;52', '76;66;76', d);
+      var thigh = L(64, 92, 76, 78) + L(76, 78, 76, 100) + L(76, 100, 86, 100); // angewinkelte Beine
+      return svg(floor(100) + torso + arm + head + thigh);
+    })(),
+
+    /* Beinheben liegend – Rumpf fix, Beine heben & senken */
+    legraise: (function () {
+      var d = '1.8s';
+      var torso = L(24, 96, 52, 96) + H(20, 96);          // Oberkörper liegt flach
+      var leg   = AL('52;52;52', '96;96;96', '84;58;84', '96;58;96', d); // Hüfte → Fuß: heben
+      return svg(floor(100) + torso + leg);
+    })(),
+
+    /* Superman – Bauchlage, Arme & Beine heben gleichzeitig */
+    superman: (function () {
+      var d = '1.8s';
+      var arm  = AL('44;44;44', '78;78;78', '24;20;24', '78;66;78', d);  // Schulter → Hand hebt
+      var body = L(44, 78, 64, 82);                                       // Schulter → Hüfte
+      var leg  = AL('64;64;64', '82;82;82', '86;86;86', '82;68;82', d);  // Hüfte → Fuß hebt
+      var head = AH('20;16;20', '74;64;74', d);
+      return svg(floor(100) + arm + body + leg + head);
+    })(),
+
+    /* Seitstütz – auf einem Unterarm, Hüfte hebt sich seitlich */
+    sideplank: (function () {
+      var d = '2s';
+      var fore = L(30, 96, 30, 78) + L(30, 96, 42, 96);                  // Unterarm
+      var body = AL('30;30;30', '78;78;78', '80;80;80', '92;82;92', d);  // Schulter → Füße: Hüfte hebt
+      var head = H(30, 70);
+      return svg(floor(100) + fore + body + head);
+    })(),
+
+    /* Bird-Dog – Vierfüßler, Arm & Bein gegengleich gestreckt */
+    birddog: (function () {
+      var d = '2s';
+      // Rumpf im Vierfüßler, Hände (28,96) & Knie (60,96)
+      var frame = L(28, 96, 28, 74) + L(28, 74, 60, 70) + L(60, 70, 60, 96);
+      var arm   = AL('28;28;28', '74;74;74', '10;14;10', '64;70;64', d); // Schulter → Hand streckt vor
+      var leg   = AL('60;60;60', '70;70;70', '84;80;84', '64;72;64', d); // Hüfte → Fuß streckt hinten
+      var head  = H(24, 70);
+      return svg(floor(100) + frame + arm + leg + head);
+    })()
   };
   ART.generic = ART.breathe;
 
@@ -231,7 +300,14 @@
     [/clean|drücken|press/, 'press'],
     [/rudern/, 'row'],
     [/russian|twist/, 'twist'],
+    [/seitstütz|side ?plank/, 'sideplank'],
     [/unterarmstütz|plank/, 'plank'],
+    [/liegestütz|push ?up/, 'pushup'],
+    [/bridge|brücke|beckenheben/, 'bridge'],
+    [/crunch/, 'crunch'],
+    [/beinheben/, 'legraise'],
+    [/superman/, 'superman'],
+    [/bird-?dog|vierfüßler/, 'birddog'],
     [/mountain/, 'climber'],
     [/burpee/, 'burpee'],
     [/jumping|step-jacks/, 'jumpingjacks'],

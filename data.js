@@ -18,6 +18,7 @@ const TIPS = {
   cardio: 'Atme gleichmäßig. Tempo so wählen, dass du noch kurze Sätze sprechen könntest – das ist deine Cardio-Zone.',
   kraft: 'Technik vor Gewicht. Lieber sauber und kontrolliert als schwer und schludrig. Ausatmen in der Anstrengung.',
   hiit: 'Voller Einsatz in der Arbeitsphase, echte Erholung in der Pause. Qualität schlägt Wiederholungen.',
+  eigengewicht: 'Kein Equipment nötig – nur du und der Boden. Tempo bewusst steuern: langsam runter, kontrolliert hoch. Bei Knie-/Handgelenksbeschwerden auf weicher Unterlage trainieren oder die leichtere Variante wählen.',
   rudern: 'Kraft kommt aus den Beinen: erst drücken, dann Körper zurück, zuletzt Arme ziehen. Zurück in umgekehrter Reihenfolge. Ruhiger, kräftiger Zug schlägt hektisches Reißen. Die Meter-Angaben (🎯) sind Richtwerte – nutze sie als Orientierung am Display, nicht als Pflicht.',
   cooldown: 'Nach dem Training runterkommen: ruhig dehnen, tief atmen, jede Position sanft halten – nie in den Schmerz ziehen.'
 };
@@ -209,6 +210,57 @@ const WORKOUTS = {
     }
   ],
 
+  /* ------------------------------------------------------------ EIGENGEWICHT */
+  eigengewicht: [
+    {
+      id: 'eigen-ganzkoerper',
+      title: 'Ganzkörper ohne Geräte',
+      level: 'Mittel',
+      minutes: 30,
+      focus: 'Eigengewicht · überall trainierbar',
+      desc: 'Kein Equipment nötig – nur dein Körper. 3 Runden für den ganzen Körper. Ideal für unterwegs oder zuhause.',
+      rounds: 3,
+      exercises: [
+        { name: 'Liegestütze', reps: '10–12 Wdh.', work: 45, rest: 20, detail: 'Körper bleibt eine gerade Linie. Auf den Knien als leichtere Variante.' },
+        { name: 'Kniebeugen ohne Gewicht', reps: '15 Wdh.', work: 45, rest: 20, detail: 'Tief und kontrolliert, Knie folgen den Zehen, Brust bleibt aufrecht.' },
+        { name: 'Ausfallschritte (je Seite)', reps: '10 je Seite', work: 50, rest: 20, detail: 'Knie sauber absenken, Oberkörper aufrecht. Abwechselnd links/rechts.' },
+        { name: 'Glute Bridge (Beckenheben)', reps: '15 Wdh.', work: 40, rest: 20, detail: 'Auf dem Rücken Hüfte hoch drücken, Po oben fest anspannen.' },
+        { name: 'Unterarmstütz (Plank)', work: 40, rest: 25, detail: 'Gerade Linie von Kopf bis Ferse, Bauch und Po fest, ruhig atmen.' }
+      ]
+    },
+    {
+      id: 'eigen-core',
+      title: 'Core & Rumpf',
+      level: 'Mittel',
+      minutes: 26,
+      focus: 'Eigengewicht · Bauch & Rücken',
+      desc: 'Ein starker Rumpf stabilisiert den ganzen Körper. 3 Runden für Bauch, Rücken und seitliche Stabilität.',
+      rounds: 3,
+      exercises: [
+        { name: 'Crunches', reps: '15 Wdh.', work: 40, rest: 15, detail: 'Schulterblätter heben, Bauch bewusst anspannen, Nacken locker.' },
+        { name: 'Beinheben liegend', reps: '12 Wdh.', work: 40, rest: 20, detail: 'Beine gestreckt heben & langsam senken, unterer Rücken bleibt am Boden.' },
+        { name: 'Superman', reps: '12 Wdh.', work: 40, rest: 20, detail: 'Bauchlage: Arme & Beine gleichzeitig heben, kurz halten. Rückenstrecker.' },
+        { name: 'Seitstütz (je Seite)', work: 30, rest: 15, detail: 'Auf dem Unterarm, Hüfte hoch, gerade Linie. Pro Seite 30 Sek.' },
+        { name: 'Bird-Dog (Vierfüßler)', reps: '10 je Seite', work: 40, rest: 20, detail: 'Gegengleich Arm & Bein strecken, Rumpf stabil halten, nicht wackeln.' }
+      ]
+    },
+    {
+      id: 'eigen-hiit',
+      title: 'Eigengewicht HIIT',
+      level: 'Intensiv',
+      minutes: 24,
+      focus: 'Eigengewicht · High Intensity',
+      desc: '40 Sek. Vollgas, 20 Sek. Pause. 4 Runden, komplett ohne Geräte – bringt Puls und Kraft auf Touren.',
+      rounds: 4,
+      exercises: [
+        { name: 'Squat Jumps (oder schnelle Squats)', work: 40, rest: 20, detail: 'Explosiv hoch, weich landen. Knieschonend: ohne Sprung, nur zügige Squats.' },
+        { name: 'Mountain Climbers', work: 40, rest: 20, detail: 'Schnelle Knie zur Brust, Hüfte tief, Schultern über den Händen.' },
+        { name: 'Liegestütze', work: 40, rest: 20, detail: 'Sauberes Tempo, volle Bewegung. Auf den Knien als leichtere Variante.' },
+        { name: 'Burpees (oder Step-Backs)', work: 40, rest: 20, detail: 'Volle Bewegung. Knieschonend: ohne Sprung, Schritt zurück.' }
+      ]
+    }
+  ],
+
   /* ------------------------------------------------------------------ RUDERN */
   rudern: [
     {
@@ -310,6 +362,7 @@ const CATEGORY_META = {
   cardio: { label: 'Cardio', emoji: '🏃', color: '#3ddc97', sub: 'Ausdauer & Kreislauf' },
   kraft:  { label: 'Kraft', emoji: '🏋️', color: '#5b8cff', sub: 'Kettlebells & Beinmaschine' },
   hiit:   { label: 'HIIT', emoji: '⚡', color: '#ff5d73', sub: 'High Intensity Intervalle' },
+  eigengewicht: { label: 'Eigengewicht', emoji: '🤸', color: '#f5b73d', sub: 'Ohne Geräte · überall' },
   rudern: { label: 'Rudern', emoji: '🚣', color: '#34c3d6', sub: 'Waterrower · Cardio & HIIT' },
   cooldown: { label: 'Cool-down', emoji: '🧘', color: '#9d7bff', sub: 'Dehnen & runterkommen – zum Schluss' }
 };
