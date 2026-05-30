@@ -1,0 +1,73 @@
+# 💪 Fit-Me · Dein virtueller Fitness-Coach
+
+Eine schlanke Web-App, die als virtueller Coach **Cardio-, Kraft- und HIIT-Trainings**
+zusammenstellt – jede Einheit ca. **30 Minuten**, ausgelegt auf **2× pro Woche**.
+Läuft direkt im Browser und ist für das **iPad (Safari)** optimiert.
+
+## Was die App kann
+
+- **🔥 Warm-up als eigene Sektion** – immer zuerst, 5–8 Minuten. Inklusive
+  einem speziellen Bein-Warm-up vor der Beinmaschine.
+- **🏃 Cardio** – Ausdauer & Kreislauf, von gelenkschonend bis Intervalle.
+- **🏋️ Kraft** – Kettlebells + Beinbeuger/Beinstrecker, Ganzkörper & Bein-Fokus.
+- **⚡ HIIT** – High-Intensity-Intervalle (Tabata, EMOM, Kettlebell-HIIT).
+- **🧘 Cool-down als eigene Sektion** – zum Schluss: Stretching & runterkommen,
+  inkl. speziellem Bein-Cool-down nach der Beinmaschine.
+- **📊 Fortschritt & Verlauf** – Wochenziel (2×), Minuten und Einheiten werden
+  automatisch lokal gespeichert und auf der Startseite angezeigt.
+- **🔥 Streak** – zeigt, wie viele Wochen in Folge du dein Ziel erreicht hast.
+- **🔗 Komplette Einheit** – startet Warm-up → Training → Cool-down geführt am
+  Stück (Kraft-, Cardio- oder HIIT-Tag).
+- **💾 Export / Import** – Verlauf als Datei sichern und auf iPhone oder Mac
+  wieder einladen (kein Server, keine Anmeldung nötig).
+- **⏱ Geführter Workout-Player** mit Timer-Ring, Arbeits-/Pausenphasen,
+  Runden, Audio-Signalen und Übungs-Hinweisen.
+- **📲 Installierbar** auf dem iPad-Homescreen (PWA, läuft im Vollbild).
+
+## Deine Ausrüstung (im Büro)
+
+- 🔔 Kettlebells in verschiedenen kg
+- 🦵 Beinbeuger-Maschine
+- 🦿 Beinstrecker-Maschine
+- 🧍 Eigengewicht
+
+## Läuft überall
+
+Reine Web-App – funktioniert in Safari/Chrome auf **iPad, iPhone und MacBook**.
+Das Layout passt sich an (eine Spalte am iPhone, zwei am Mac/iPad). Auf iPad/iPhone
+über *Teilen → Zum Home-Bildschirm*, am Mac in Safari über *Ablage → Zum Dock hinzufügen*.
+
+> Hinweis zum Verlauf: Er wird **pro Gerät** lokal gespeichert und **nicht**
+> automatisch synchronisiert. Mit **Export/Import** nimmst du ihn auf ein
+> anderes Gerät mit.
+
+## Auf dem iPad nutzen
+
+1. Repository öffnen und `index.html` im **Safari** aufrufen
+   (lokal oder über einen kleinen Webserver, z. B. `python3 -m http.server`).
+2. Über **Teilen → Zum Home-Bildschirm** als App hinzufügen.
+3. Tippe auf eine Kachel, starte das Training und folge dem Timer.
+
+> Tipp: Beginne jede Einheit mit dem **Warm-up**, wähle danach Cardio, Kraft
+> oder HIIT und schließe mit dem **Cool-down** ab. Jede abgeschlossene Einheit
+> landet automatisch in deinem **Verlauf** auf der Startseite.
+
+## Trainings anpassen
+
+Alle Workouts stehen in **`data.js`** – Übungen, Zeiten, Pausen, Runden und
+Coaching-Hinweise lassen sich dort einfach ändern oder erweitern.
+
+## Aufbau
+
+| Datei | Inhalt |
+|-------|--------|
+| `index.html` | Grundgerüst & Workout-Player |
+| `styles.css` | Design (Dark, touch-freundlich) |
+| `data.js` | Alle Trainingspläne & Übungen |
+| `app.js` | App-Logik & Timer |
+| `manifest.webmanifest` / `icon.svg` | PWA / Homescreen-Icon |
+
+---
+
+*Kein Ersatz für medizinische Beratung. Bei Beschwerden oder Vorerkrankungen
+vorab ärztlich abklären und auf saubere Technik achten.*

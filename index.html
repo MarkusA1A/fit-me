@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Fit-Me" />
+  <meta name="theme-color" content="#0f1226" />
+  <meta name="description" content="Fit-Me – dein virtueller Fitness-Coach für Cardio, Kraft & HIIT in ca. 30 Minuten." />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Fit-Me · Dein virtueller Coach</title>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-logo">💪</span>
+      <div>
+        <h1>Fit-Me</h1>
+        <p class="tagline">Dein virtueller Fitness-Coach</p>
+      </div>
+    </div>
+    <div class="header-info" id="todayInfo"></div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab is-active" data-tab="home">Start</button>
+    <button class="tab" data-tab="warmup">Warm-up</button>
+    <button class="tab" data-tab="cardio">Cardio</button>
+    <button class="tab" data-tab="kraft">Kraft</button>
+    <button class="tab" data-tab="hiit">HIIT</button>
+    <button class="tab" data-tab="cooldown">Cool-down</button>
+  </nav>
+
+  <main id="view"></main>
+
+  <!-- Versteckter Datei-Input zum Importieren des Verlaufs -->
+  <input type="file" id="importFile" accept="application/json,.json" hidden />
+
+  <!-- Workout-Player Overlay -->
+  <div class="player" id="player" hidden>
+    <div class="player-inner">
+      <div class="player-top">
+        <button class="icon-btn" id="playerClose" aria-label="Schließen">✕</button>
+        <div class="player-title" id="playerTitle"></div>
+        <div class="player-step" id="playerStepCount"></div>
+      </div>
+
+      <div class="player-stage" id="playerStage">
+        <div class="player-phase" id="playerPhase"></div>
+        <div class="timer-ring">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="54"></circle>
+            <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="54"></circle>
+          </svg>
+          <div class="timer-num" id="playerTime">00:00</div>
+        </div>
+        <h2 class="player-ex" id="playerExercise"></h2>
+        <p class="player-detail" id="playerDetail"></p>
+        <p class="player-next" id="playerNext"></p>
+      </div>
+
+      <div class="player-controls">
+        <button class="ctrl" id="btnPrev">⏮ Zurück</button>
+        <button class="ctrl ctrl-main" id="btnPlay">Start</button>
+        <button class="ctrl" id="btnSkip">Weiter ⏭</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <p>2× pro Woche · ca. 30&nbsp;Min · Kettlebells &amp; Beinbeuger/-strecker</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
