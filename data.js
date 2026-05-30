@@ -18,7 +18,7 @@ const TIPS = {
   cardio: 'Atme gleichmäßig. Tempo so wählen, dass du noch kurze Sätze sprechen könntest – das ist deine Cardio-Zone.',
   kraft: 'Technik vor Gewicht. Lieber sauber und kontrolliert als schwer und schludrig. Ausatmen in der Anstrengung.',
   hiit: 'Voller Einsatz in der Arbeitsphase, echte Erholung in der Pause. Qualität schlägt Wiederholungen.',
-  rudern: 'Kraft kommt aus den Beinen: erst drücken, dann Körper zurück, zuletzt Arme ziehen. Zurück in umgekehrter Reihenfolge. Ruhiger, kräftiger Zug schlägt hektisches Reißen.',
+  rudern: 'Kraft kommt aus den Beinen: erst drücken, dann Körper zurück, zuletzt Arme ziehen. Zurück in umgekehrter Reihenfolge. Ruhiger, kräftiger Zug schlägt hektisches Reißen. Die Meter-Angaben (🎯) sind Richtwerte – nutze sie als Orientierung am Display, nicht als Pflicht.',
   cooldown: 'Nach dem Training runterkommen: ruhig dehnen, tief atmen, jede Position sanft halten – nie in den Schmerz ziehen.'
 };
 
@@ -220,9 +220,9 @@ const WORKOUTS = {
       desc: 'Ruhiges Dauer-Rudern in konstantem Tempo. Baut Grundlagenausdauer auf und schult einen sauberen Ruderschlag.',
       rounds: 3,
       exercises: [
-        { name: 'Locker einrudern', work: 120, rest: 30, detail: 'Ruhiges Tempo (ca. 20–22 Schläge/Min). In den Rhythmus finden, gleichmäßig atmen.' },
-        { name: 'Steady-State Block', work: 180, rest: 40, detail: 'Konstantes, angenehm forderndes Tempo. Sauberer Zug: Beine → Rumpf → Arme.' },
-        { name: 'Kontroll-Block (Technik)', work: 120, rest: 30, detail: 'Bewusst auf saubere Reihenfolge achten. Langer Gleit-Weg, ruhige Erholungsphase.' }
+        { name: 'Locker einrudern', work: 120, rest: 30, goal: '~350 m', detail: 'Ruhiges Tempo (ca. 20–22 Schläge/Min). In den Rhythmus finden, gleichmäßig atmen.' },
+        { name: 'Steady-State Block', work: 180, rest: 40, goal: '~600 m', detail: 'Konstantes, angenehm forderndes Tempo. Sauberer Zug: Beine → Rumpf → Arme.' },
+        { name: 'Kontroll-Block (Technik)', work: 120, rest: 30, goal: '~350 m', detail: 'Bewusst auf saubere Reihenfolge achten. Langer Gleit-Weg, ruhige Erholungsphase.' }
       ]
     },
     {
@@ -234,9 +234,9 @@ const WORKOUTS = {
       desc: 'Wechsel aus kräftigen und ruhigen Phasen treibt Kondition und Watt-Leistung. Push hart, erhol dich aktiv.',
       rounds: 5,
       exercises: [
-        { name: 'Aktiv rudern (zügig)', work: 60, rest: 0, detail: 'Erhöhtes Tempo (ca. 26–28 Schläge/Min), kräftiger Beindruck.' },
-        { name: 'Locker rudern (Erholung)', work: 60, rest: 0, detail: 'Tempo deutlich rausnehmen, Puls bewusst senken. Weiter gleichmäßig ziehen.' },
-        { name: 'Sprint-Push', work: 30, rest: 30, detail: 'Kurz alles geben – starker, schneller Zug. Danach komplett ausrudern.' }
+        { name: 'Aktiv rudern (zügig)', work: 60, rest: 0, goal: '~225 m', detail: 'Erhöhtes Tempo (ca. 26–28 Schläge/Min), kräftiger Beindruck.' },
+        { name: 'Locker rudern (Erholung)', work: 60, rest: 0, goal: '~160 m', detail: 'Tempo deutlich rausnehmen, Puls bewusst senken. Weiter gleichmäßig ziehen.' },
+        { name: 'Sprint-Push', work: 30, rest: 30, goal: '~130 m', detail: 'Kurz alles geben – starker, schneller Zug. Danach komplett ausrudern.' }
       ]
     },
     {
@@ -248,8 +248,8 @@ const WORKOUTS = {
       desc: 'Intensive Intervalle am Wasserwiderstand. Kurze, harte Belastungen mit echter Erholung – ideal als HIIT-Einheit.',
       rounds: 6,
       exercises: [
-        { name: 'Power-Intervall (hart)', work: 40, rest: 20, detail: 'Vollgas: explosiver Beindruck, kräftiger Zug. Hoher Wasserwiderstand spürbar.' },
-        { name: 'Aktive Erholung am Gerät', work: 40, rest: 0, detail: 'Ganz locker weiterrudern, tief atmen, Puls runterfahren.' }
+        { name: 'Power-Intervall (hart)', work: 40, rest: 20, goal: '~160 m', detail: 'Vollgas: explosiver Beindruck, kräftiger Zug. Hoher Wasserwiderstand spürbar.' },
+        { name: 'Aktive Erholung am Gerät', work: 40, rest: 0, goal: '~100 m', detail: 'Ganz locker weiterrudern, tief atmen, Puls runterfahren.' }
       ]
     },
     {
@@ -261,7 +261,7 @@ const WORKOUTS = {
       desc: 'Cardio am Ruderer im Wechsel mit Kraft an der Kettlebell. Hält den Puls oben und fordert den ganzen Körper.',
       rounds: 4,
       exercises: [
-        { name: 'Rudern zügig', work: 90, rest: 15, detail: 'Gleichmäßig kräftiges Tempo am Waterrower. Sauberer Durchzug.' },
+        { name: 'Rudern zügig', work: 90, rest: 15, goal: '~320 m', detail: 'Gleichmäßig kräftiges Tempo am Waterrower. Sauberer Durchzug.' },
         { name: 'Kettlebell Swings', work: 40, rest: 20, detail: 'Vom Ruderer absteigen, explosiver Hüftstoß. Mittleres Gewicht.' },
         { name: 'Goblet Squat', work: 40, rest: 25, detail: 'Kugel vor der Brust, tiefe kontrollierte Kniebeuge.' }
       ]

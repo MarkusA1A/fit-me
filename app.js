@@ -151,6 +151,7 @@
   /* ------------------------------------------------------------- Rendering */
   function fmtAmount(ex) {
     if (ex.reps) return ex.reps;
+    if (ex.goal) return ex.work + 's · ' + ex.goal;
     return ex.work + 's';
   }
 
@@ -438,6 +439,7 @@
           name: ex.name,
           detail: ex.detail || '',
           amount: ex.reps || (ex.work + ' Sekunden'),
+          goal: ex.goal || '',
           dur: ex.work || 40,
           round: rounds > 1 ? (r + 1) : 0,
           totalRounds: rounds,
@@ -556,8 +558,10 @@
       player.next.textContent = '';
     }
 
-    // Bei Übungen mit Wiederholungen statt Zeit den amount mit zeigen
-    if (s.type === 'work' && s.amount && /Wdh|Seite/.test(s.amount)) {
+    // Ziel-Hinweis voranstellen: explizites goal (z. B. Ruder-Distanz) oder Reps
+    if (s.type === 'work' && s.goal) {
+      player.detail.textContent = '🎯 ' + s.goal + '  ·  ' + s.detail;
+    } else if (s.type === 'work' && s.amount && /Wdh|Seite/.test(s.amount)) {
       player.detail.textContent = '🎯 ' + s.amount + '  ·  ' + s.detail;
     }
 
