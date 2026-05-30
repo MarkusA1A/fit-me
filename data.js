@@ -22,7 +22,8 @@ const TIPS = {
   eigengewicht: 'Kein Equipment nötig – nur du und der Boden. Tempo bewusst steuern: langsam runter, kontrolliert hoch. Bei Knie-/Handgelenksbeschwerden auf weicher Unterlage trainieren oder die leichtere Variante wählen.',
   rudern: 'Kraft kommt aus den Beinen: erst drücken, dann Körper zurück, zuletzt Arme ziehen. Zurück in umgekehrter Reihenfolge. Ruhiger, kräftiger Zug schlägt hektisches Reißen. Die Meter-Angaben (🎯) sind Richtwerte – nutze sie als Orientierung am Display, nicht als Pflicht.',
   cooldown: 'Nach dem Training runterkommen: ruhig dehnen, tief atmen, jede Position sanft halten – nie in den Schmerz ziehen.',
-  meditation: 'Such dir einen ruhigen Ort, sitz oder lieg bequem. Es gibt kein „richtig“ oder „falsch“ – kehre einfach freundlich zur Übung zurück, wenn die Gedanken abschweifen.'
+  meditation: 'Such dir einen ruhigen Ort, sitz oder lieg bequem. Es gibt kein „richtig“ oder „falsch“ – kehre einfach freundlich zur Übung zurück, wenn die Gedanken abschweifen.',
+  yoga: 'Atem und Bewegung gehören zusammen: bewege dich ruhig im Takt des Atems. Geh nur so weit in jede Haltung, wie es sich gut anfühlt – Yoga ist kein Wettkampf.'
 };
 
 const WORKOUTS = {
@@ -439,6 +440,46 @@ const WORKOUTS = {
         { name: 'Zurück in den Tag', work: 30, rest: 0, detail: 'Atme tief durch, strecke dich sanft und nimm die Ruhe mit.' }
       ]
     }
+  ],
+
+  /* ------------------------------------------------------------------- YOGA */
+  yoga: [
+    {
+      id: 'yoga-basics',
+      title: 'Yoga Basics',
+      level: 'Sanft',
+      minutes: 6,
+      focus: 'Yoga · Grundhaltungen für Einsteiger',
+      desc: 'Eine ruhige Einführung in die wichtigsten Yoga-Haltungen. Atme tief und gleichmäßig, halte jede Pose entspannt – ganz ohne Ehrgeiz.',
+      exercises: [
+        { name: 'Berghaltung (Tadasana)', work: 40, rest: 0, detail: 'Aufrecht stehen, Füße hüftbreit, Arme über Kopf strecken. Tief in den Bauch atmen.' },
+        { name: 'Stehende Vorbeuge', work: 40, rest: 0, detail: 'Aus dem Stand nach vorn beugen, Knie leicht gebeugt, Kopf und Arme locker hängen lassen.' },
+        { name: 'Herabschauender Hund', work: 45, rest: 0, detail: 'Hände und Füße am Boden, Hüfte hoch ins umgekehrte V. Fersen sinken Richtung Boden.' },
+        { name: 'Krieger II – rechte Seite', work: 40, rest: 0, detail: 'Rechtes Knie vorn beugen, Arme waagrecht, Blick über die rechte Hand. Stabil atmen.' },
+        { name: 'Krieger II – linke Seite', work: 40, rest: 0, detail: 'Seite wechseln: linkes Knie vorn, Arme lang, Blick über die linke Hand.' },
+        { name: 'Kobra', work: 40, rest: 0, detail: 'Bauchlage, Hände unter den Schultern, Brust sanft heben. Schultern weg von den Ohren.' },
+        { name: 'Kindhaltung', work: 45, rest: 0, detail: 'Kniend zurück auf die Fersen setzen, Stirn ablegen, Arme nach vorn strecken. Ausruhen.' },
+        { name: 'Tiefes Atmen im Sitzen', work: 40, rest: 0, detail: 'Im Sitzen zur Ruhe kommen: 4 Sek. ein, 6 Sek. aus. Einheit ausklingen lassen.' }
+      ]
+    },
+    {
+      id: 'yoga-flow',
+      title: 'Sanfter Yoga-Flow',
+      level: 'Sanft',
+      minutes: 6,
+      focus: 'Yoga · Beweglichkeit & Balance',
+      desc: 'Ein fließender Ablauf für Beweglichkeit und Gleichgewicht. Bewege dich ruhig mit dem Atem von Haltung zu Haltung.',
+      exercises: [
+        { name: 'Berghaltung (Tadasana)', work: 30, rest: 0, detail: 'Ankommen, aufrecht stehen, ein paar tiefe Atemzüge nehmen.' },
+        { name: 'Katze-Kuh (Cat-Cow)', work: 45, rest: 0, detail: 'Im Vierfüßler Wirbelsäule abwechselnd rund und lang machen – im Takt des Atems.' },
+        { name: 'Herabschauender Hund', work: 40, rest: 0, detail: 'Hüfte hoch, Rücken lang ziehen, ruhig atmen.' },
+        { name: 'Krieger II – rechte Seite', work: 40, rest: 0, detail: 'Rechtes Knie vorn, Arme lang, ruhiger Blick über die rechte Hand.' },
+        { name: 'Krieger II – linke Seite', work: 40, rest: 0, detail: 'Seite wechseln: linkes Knie vorn, stabiler Stand, Arme waagrecht.' },
+        { name: 'Baum (Vrksasana) – rechtes Bein', work: 40, rest: 0, detail: 'Auf dem rechten Bein stehen, linken Fuß an den Innenschenkel, Hände über Kopf. Fixpunkt suchen.' },
+        { name: 'Baum (Vrksasana) – linkes Bein', work: 40, rest: 0, detail: 'Seite wechseln: auf dem linken Bein balancieren, ruhig atmen.' },
+        { name: 'Kindhaltung', work: 40, rest: 0, detail: 'Zur Ruhe kommen, Stirn ablegen, tief in den Rücken atmen.' }
+      ]
+    }
   ]
 };
 
@@ -450,5 +491,6 @@ const CATEGORY_META = {
   eigengewicht: { label: 'Eigengewicht', emoji: '🤸', color: '#f5b73d', sub: 'Ohne Geräte · überall' },
   rudern: { label: 'Rudern', emoji: '🚣', color: '#34c3d6', sub: 'Waterrower · Cardio & HIIT' },
   cooldown: { label: 'Cool-down', emoji: '🧘', color: '#9d7bff', sub: 'Dehnen & runterkommen – zum Schluss' },
-  meditation: { label: 'Meditation', emoji: '🧠', color: '#7dd3c0', sub: 'Atmung & Achtsamkeit' }
+  meditation: { label: 'Meditation', emoji: '🧠', color: '#7dd3c0', sub: 'Atmung & Achtsamkeit' },
+  yoga: { label: 'Yoga', emoji: '🪷', color: '#9ac98a', sub: 'Basis-Haltungen & sanfter Flow' }
 };

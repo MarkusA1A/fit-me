@@ -20,6 +20,8 @@ oder 6× pro Woche). Läuft direkt im Browser, optimiert für **iPad, iPhone & M
   inkl. speziellem Bein-Cool-down nach der Beinmaschine.
 - **🧠 Meditation** – geführte Atem- (4-7-8, Box-Atmung) und Achtsamkeits­übungen
   (Body-Scan, Achtsamkeits-Pause) zum Entspannen und Fokussieren.
+- **🪷 Yoga** – Basis-Haltungen für Einsteiger (Berg, Herabschauender Hund,
+  Krieger II, Kobra, Baum, Kindhaltung) und ein sanfter Yoga-Flow.
 - **📊 Flexibles Wochenziel** – frei einstellbar (1–14×/Woche). Fortschritt,
   Minuten und Einheiten werden automatisch lokal gespeichert.
 - **🔥 Streak** – zeigt, wie viele Wochen in Folge du dein Ziel erreicht hast.

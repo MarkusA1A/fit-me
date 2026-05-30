@@ -170,7 +170,7 @@
   }
 
   function renderHome() {
-    const tiles = ['warmup', 'cardio', 'kraft', 'hiit', 'eigengewicht', 'rudern', 'cooldown', 'meditation'].map(function (key) {
+    const tiles = ['warmup', 'cardio', 'kraft', 'hiit', 'eigengewicht', 'rudern', 'cooldown', 'meditation', 'yoga'].map(function (key) {
       const m = CATEGORY_META[key];
       return (
         '<div class="cat-tile" data-goto="' + key + '">' +
@@ -667,9 +667,9 @@
     }
     beep(660, 0.15);
     setTimeout(function () { beep(880, 0.25); }, 160);
-    const isMedi = currentWorkout && currentWorkout.cat === 'meditation';
-    const doneEmoji = isMedi ? '🧘' : '🎉';
-    const doneMsg = isMedi
+    const calmCat = currentWorkout && (currentWorkout.cat === 'meditation' || currentWorkout.cat === 'yoga');
+    const doneEmoji = calmCat ? '🧘' : '🎉';
+    const doneMsg = calmCat
       ? 'Schön, dass du dir die Zeit genommen hast. Nimm die Ruhe mit in deinen Tag.'
       : 'Starke Einheit. Vergiss das Cool-down nicht: 2–3 Minuten locker dehnen.';
     player.stage.innerHTML =

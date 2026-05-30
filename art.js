@@ -309,6 +309,58 @@
       var leg   = AL('60;60;60', '70;70;70', '84;80;84', '64;72;64', d); // Hüfte → Fuß streckt hinten
       var head  = H(24, 70);
       return svg(floor(100) + frame + arm + leg + head);
+    })(),
+
+    /* Yoga: Berg (Tadasana) – aufrecht stehen, Arme über Kopf, ruhiges Atmen */
+    y_mountain: (function () {
+      var fig = H(50, 22) + L(50, 30, 50, 64) +
+        L(50, 34, 45, 14) + L(50, 34, 55, 14) +   // Arme nach oben
+        L(50, 64, 44, 102) + L(50, 64, 56, 102);  // Beine
+      return svg(floor() + G(AT('translate', '0 0;0 -2;0 0', '5s'), fig));
+    })(),
+
+    /* Yoga: Herabschauender Hund (Adho Mukha) – umgekehrtes V, Hüfte hoch */
+    y_downdog: (function () {
+      var fig = L(22, 100, 54, 50) + L(54, 50, 82, 100) + // Arme/Rumpf → Hüfte → Beine
+        L(22, 100, 30, 100) + L(82, 100, 74, 100) +       // Hände & Füße am Boden
+        H(31, 64);                                         // Kopf hängt zwischen den Armen
+      return svg(floor(100) + G(AT('translate', '0 0;0 -2;0 0', '5s'), fig));
+    })(),
+
+    /* Yoga: Kobra (Bhujangasana) – Bauchlage, Brust hebt & senkt sich */
+    y_cobra: (function () {
+      var d = '4.5s';
+      var lower = L(22, 97, 58, 95);                       // Beine & Becken am Boden
+      var torso = AL('58;58;58', '95;95;95', '72;74;72', '84;66;84', d); // Becken → Brust hebt
+      var arm   = AL('72;74;72', '84;66;84', '78;78;78', '97;97;97', d); // Brust → Hand am Boden
+      var head  = AH('74;78;74', '78;58;78', d);
+      return svg(floor(100) + lower + torso + arm + head);
+    })(),
+
+    /* Yoga: Kindhaltung (Balasana) – kniend nach vorn abgelegt, ruhend */
+    y_child: (function () {
+      var fig = L(66, 90, 78, 99) + L(66, 90, 36, 92) +    // Sitz/Ferse → gerundeter Rücken nach vorn
+        L(36, 92, 18, 95) +                                 // Arme nach vorn ausgestreckt
+        H(40, 86);                                          // Kopf abgelegt
+      return svg(floor(100) + G(AT('translate', '0 0;0 -1.5;0 0', '5s'), fig));
+    })(),
+
+    /* Yoga: Krieger II (Virabhadrasana) – weiter Stand, Arme waagrecht */
+    y_warrior: (function () {
+      var fig = H(50, 24) + L(50, 32, 50, 58) +
+        L(50, 40, 26, 40) + L(50, 40, 74, 40) +            // Arme waagrecht ausgestreckt
+        L(50, 58, 32, 80) + L(32, 80, 30, 102) +           // vorderes Bein gebeugt
+        L(50, 58, 72, 102);                                 // hinteres Bein gestreckt
+      return svg(floor() + G(AT('translate', '0 0;0 -1.5;0 0', '5s'), fig));
+    })(),
+
+    /* Yoga: Baum (Vrksasana) – Einbeinstand, Fuß an Innenschenkel, leichtes Pendeln */
+    y_tree: (function () {
+      var fig = H(50, 26) + L(50, 34, 50, 60) +
+        L(50, 38, 46, 22) + L(50, 38, 54, 22) +            // Hände über Kopf zusammen
+        L(50, 60, 50, 102) +                                // Standbein
+        L(50, 60, 34, 74) + L(34, 74, 48, 80);             // angewinkeltes Bein an den Schenkel
+      return svg(floor() + G(AT('rotate', '-1.5 50 102;1.5 50 102;-1.5 50 102', '4.5s'), fig));
     })()
   };
   ART.generic = ART.breathe;
@@ -321,6 +373,12 @@
     [/einatmen|ausatmen|halten|atem beobacht|box-atmung|atmung/, 'breath'],
     [/body-scan|achtsam|nachspüren|innehalten|ankommen|hinlegen|zurückkommen|zurück in den|dankbarkeit|geräusche|gedanken|ganzer körper|nacken|becken|brust & rücken|arme & hände|füße & beine/, 'meditate'],
     [/atmen|atem/, 'breathe'],
+    [/berg|tadasana/, 'y_mountain'],
+    [/herabschauend|downward|hund/, 'y_downdog'],
+    [/kobra|cobra|bhujang/, 'y_cobra'],
+    [/kindhaltung|child|balasana/, 'y_child'],
+    [/krieger|warrior|virabhadr/, 'y_warrior'],
+    [/baum|tree|vrksasana/, 'y_tree'],
     [/wadenheben/, 'calf'],
     [/halo/, 'halo'],
     [/swing/, 'swing'],
