@@ -28,6 +28,32 @@
       '" values="' + values + '" dur="' + dur + '" repeatCount="indefinite"' + (extra || '') + '/>';
   }
   function G(anim, content) { return '<g>' + anim + content + '</g>'; }
+
+  // Animierte Linie: jeder Endpunkt als Keyframe-String "a;b;a".
+  // kt = optionale keyTimes (z. B. "0;0.4;1" für schnellen Hin-, langsamen Rückweg)
+  function AL(x1, y1, x2, y2, dur, kt) {
+    var kts = kt ? ' keyTimes="' + kt + '"' : '';
+    function an(name, vals) {
+      return '<animate attributeName="' + name + '" values="' + vals + '" dur="' + dur + '"' + kts + ' repeatCount="indefinite"/>';
+    }
+    return '<line>' + an('x1', x1) + an('y1', y1) + an('x2', x2) + an('y2', y2) + '</line>';
+  }
+  // Animierter Kopf (Kreis mit wanderndem Mittelpunkt)
+  function AH(cx, cy, dur, kt) {
+    var kts = kt ? ' keyTimes="' + kt + '"' : '';
+    function an(name, vals) {
+      return '<animate attributeName="' + name + '" values="' + vals + '" dur="' + dur + '"' + kts + ' repeatCount="indefinite"/>';
+    }
+    return '<circle class="head" r="8" fill="' + STROKE + '" stroke="none">' + an('cx', cx) + an('cy', cy) + '</circle>';
+  }
+  // Animierte Kugel/Gewicht
+  function AB(cx, cy, r, dur, kt) {
+    var kts = kt ? ' keyTimes="' + kt + '"' : '';
+    function an(name, vals) {
+      return '<animate attributeName="' + name + '" values="' + vals + '" dur="' + dur + '"' + kts + ' repeatCount="indefinite"/>';
+    }
+    return '<circle class="ball" r="' + (r || 6) + '" fill="' + ACCENT + '" stroke="none">' + an('cx', cx) + an('cy', cy) + '</circle>';
+  }
   function svg(inner) {
     return '<svg class="fig" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"' +
       ' fill="none" stroke="' + STROKE + '" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>';
@@ -129,10 +155,21 @@
     plank: svg(floor(100) + G(AT('translate', '0 0;0 2;0 0', '2.4s'),
       H(26, 74) + L(30, 76, 72, 66) + L(30, 76, 30, 96) + L(30, 96, 40, 96) + L(72, 66, 86, 96))),
 
-    /* Russian Twist – Rumpf rotieren */
-    twist: svg(floor(100) + L(50, 86, 40, 74) + L(40, 74, 34, 88) + L(50, 86, 60, 74) + L(60, 74, 66, 88) +
-      G(AT('rotate', '-24 50 74;24 50 74;-24 50 74', '1.1s'),
-        H(50, 54) + L(50, 60, 50, 74) + L(50, 62, 60, 68) + L(50, 62, 40, 68) + B(50, 70, 5))),
+    /* Russian Twist – Gewicht tippt abwechselnd links/rechts neben der Hüfte auf.
+       Großer Ausschlag, Oberkörper lehnt zurück (Boot-Position). Hüfte = (50,84). */
+    twist: (function () {
+      var d = '1.6s';
+      // statische, angewinkelte Beine (Fersen am Boden)
+      var legs = L(50, 84, 40, 70) + L(40, 70, 34, 96) + L(50, 84, 60, 70) + L(60, 70, 66, 96);
+      // Oberkörper lehnt leicht zurück und kippt mit (Kopf wandert seitlich)
+      var spine = AL('50;50;50', '84;84;84', '46;54;46', '52;52;52', d);
+      var head  = AH('44;56;44', '46;46;46', d);
+      // Arme von der Brust zum Gewicht, das weit zur Seite schwingt
+      var armL  = AL('48;48;48', '58;58;58', '26;58;26', '78;82;78', d);
+      var armR  = AL('52;52;52', '58;58;58', '30;62;30', '82;78;82', d);
+      var ball  = AB('28;60;28', '80;80;80', 6, d);   // Gewicht: links → rechts → links
+      return svg(floor(100) + legs + spine + head + armL + armR + ball);
+    })(),
 
     /* Mountain Climbers – Knie zur Brust */
     climber: svg(floor(100) + H(26, 74) + L(30, 76, 70, 70) + L(30, 76, 30, 96) + L(30, 96, 40, 96) + L(70, 70, 86, 96) +
@@ -142,10 +179,25 @@
     burpee: svg(floor() + G(AT('translate', '0 0;0 30;0 0', '1.3s'),
       H(50, 16) + L(50, 24, 50, 56) + L(50, 30, 44, 12) + L(50, 30, 56, 12) + L(50, 56, 44, 100) + L(50, 56, 56, 100))),
 
-    /* Waterrower – sitzend gleiten & ziehen */
-    rowmachine: svg(floor(98) + L(82, 84, 82, 98) +
-      G(AT('translate', '8 0;-10 0;8 0', '1.4s'),
-        H(46, 58) + L(48, 64, 50, 88) + L(44, 88, 58, 88) + L(52, 88, 78, 90) + L(78, 90, 82, 86) + L(50, 68, 72, 86) + B(72, 86, 4))),
+    /* Waterrower – kompletter Ruderzyklus: vorn kauern → Beine drücken →
+       zurücklehnen & Griff zur Brust ziehen → zurück (Catch→Drive→Finish→Recovery) */
+    rowmachine: (function () {
+      var d = '2.4s';
+      var kt = '0;0.4;1';  // Zug (Drive) schnell, Rückführung (Recovery) langsamer
+      // Schwungrad (links), Fußstütze (fix), Schiene/Boden
+      var rig = '<circle cx="15" cy="80" r="9" fill="none" stroke="' + STROKE + '" stroke-width="4"/>' +
+        L(31, 84, 31, 100) +            // Fußstütze (fix)
+        '<line x1="12" y1="100" x2="88" y2="100" stroke="' + FLOORC + '" stroke-width="3"/>';
+      // Keyframes je Endpunkt: Catch (vorn, gekauert) ; Finish (hinten, gestreckt) ; Catch
+      var shin  = AL('32;32;32', '92;92;92', '42;54;42', '66;88;66', d, kt);  // Fuß(fix) → Knie
+      var thigh = AL('42;54;42', '66;88;66', '50;68;50', '86;88;86', d, kt);  // Knie → Sitz/Hüfte
+      var spine = AL('50;68;50', '86;88;86', '44;76;44', '64;66;64', d, kt);  // Hüfte → Schulter
+      var arm   = AL('44;76;44', '64;66;64', '26;60;26', '72;74;72', d, kt);  // Schulter → Hand
+      var cord  = AL('26;60;26', '72;74;72', '15;15;15', '80;80;80', d, kt);  // Hand → Schwungrad
+      var head  = AH('40;80;40', '54;58;54', d, kt);
+      var grip  = AB('26;60;26', '72;74;72', 4, d, kt);                       // Griff zur Brust
+      return svg(rig + shin + thigh + spine + arm + cord + head + grip);
+    })(),
 
     /* Dehnen – seitlich neigen, ein Arm über Kopf */
     stretch: svg(floor() + L(50, 58, 44, 100) + L(50, 58, 56, 100) +
